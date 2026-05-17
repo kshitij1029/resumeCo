@@ -16,34 +16,28 @@ $transition: all 0.3s ease;
 }
 
 // Top Left Home Button
-.home-nav-btn {
-  position: absolute;
-  top: 2rem;
-  left: 2rem;
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  background: rgba(255, 255, 255, 0.05);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  color: $text-main;
-  padding: 0.6rem 1.2rem;
-  border-radius: 10px;
-  cursor: pointer;
-  transition: $transition;
-  z-index: 10;
+.home2-nav-btn {
+        pointer-events: auto; // Re-enables clicking on the actual buttons
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        background: transparent;
+        border:none;
+        color: $text-main;
+        padding:1.6rem 3rem;
+        border-radius: 10px;
+        cursor: pointer;
+        transition: $transition;
 
-  &:hover {
-    background: rgba(255, 255, 255, 0.1);
-    transform: translateY(-2px);
-  }
 
-  @media (max-width: 768px) {
-    top: 1rem;
-    left: 1rem;
-    padding: 0.5rem 1rem;
-    span { display: none; } // Icon only on very small screens if needed
-  }
-}
+        @media (max-width: 768px) {
+            padding: 0.5rem 1rem;
+            
+            span { 
+                display: none; // Keeps things clean by rendering icons only on mobile frames
+            } 
+        }
+    }
 
 .auth-main {
   flex: 1;
@@ -51,6 +45,7 @@ $transition: all 0.3s ease;
   justify-content: center;
   align-items: center;
   padding: 2rem;
+  padding-top: 0;
 }
 
 .form-container {

@@ -31,14 +31,14 @@ const Login = () => {
     return (
         <div className="auth-wrapper">
             {/* New Styled Home Button */}
-            <button 
-                onClick={() => navigate("/")} 
-                className="home-nav-btn"
-                aria-label="Go to Home"
-            >
-                <Home size={20} />
-                <span>Home</span>
-            </button>
+            {/* 1. First Child = Left Anchor: Home Button */}
+                <button 
+                    onClick={() => navigate("/")} 
+                    className="home2-nav-btn"
+                    aria-label="Go to Home"
+                >
+                    <div className="logo">resume<span className="dot">CO.</span></div>
+                </button>
 
             <main className="auth-main">
                 <div className="form-container">

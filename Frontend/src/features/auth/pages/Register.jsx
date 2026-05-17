@@ -34,11 +34,10 @@ const Register = () => {
       {/* Home Navigation Button */}
       <button 
         onClick={() => navigate("/")} 
-        className="home-nav-btn"
+        className="home2-nav-btn"
         aria-label="Go to Home"
-      >
-        <Home size={20} />
-        <span>Home</span>
+        >
+        <div className="logo">resume<span className="dot">CO.</span></div>
       </button>
 
       <main className="auth-main">

@@ -127,6 +127,6 @@ export async function getMe(){
         return response.data
     } catch (error) {
         console.log(error)
-        return null; // Explicitly return null so the UI knows no one is logged in
+         // Explicitly return null so the UI knows no one is logged in
     }
 }

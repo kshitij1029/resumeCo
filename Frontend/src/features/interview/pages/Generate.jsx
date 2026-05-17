@@ -4,6 +4,7 @@ import { useInterview } from '../hooks/useInterview.js'
 import { useNavigate } from 'react-router'
 import { Home, History } from 'lucide-react' // Import Home icon
 import Loading from '../../others/components/Loading.jsx'
+import AnimatedBackground from '../../others/components/AnimatedBackground.jsx';
 
 const Generate = () => {
 
@@ -41,6 +42,9 @@ const Generate = () => {
 
     return (
         <div className='home-page'>
+            <div className="bg-animation-layer">
+                <AnimatedBackground />
+            </div>
             {/* Top Navigation Row - Separating Home to Left and History to Right */}
             {/* Full-width Top Navigation Anchor Bar */}
             <div className="top-nav-bar">
@@ -48,11 +52,10 @@ const Generate = () => {
                 {/* 1. First Child = Left Anchor: Home Button */}
                 <button 
                     onClick={() => navigate("/")} 
-                    className="home1-nav-btn"
+                    className="home2-nav-btn"
                     aria-label="Go to Home"
                 >
-                    <Home size={20} />
-                    <span>Home</span>
+                    <div className="logo">resume<span className="dot">CO.</span></div>
                 </button>
 
                 {/* 2. Second Child = Right Anchor: History Button */}
@@ -97,12 +100,27 @@ const Generate = () => {
                             <span className='badge badge--required'>Required</span>
                         </div>
                         <textarea
+                            value={jobDescription}
                             onChange={(e) => { setJobDescription(e.target.value) }}
                             className='panel__textarea'
                             placeholder={`Paste the full job description here...\ne.g. 'Senior Frontend Engineer at Google requires proficiency in React, TypeScript, and large-scale system design...'`}
                             maxLength={5000}
                         />
-                        <div className='char-counter'>0 / 5000 chars</div>
+                        
+                        {/* Dynamic styling and text swap depending on character thresholds */}
+                        <div 
+                            className='char-counter'
+                            style={{
+                                color: jobDescription.length > 0 ? '#ef3d7b' : 'inherit',
+                                fontWeight: jobDescription.length === 5000 ? '600' : 'normal'
+                            }}
+                        >
+                            {jobDescription.length === 5000 ? (
+                                <span>Limit reached!</span>
+                            ) : (
+                                <span>{jobDescription.length} / 5000 chars</span>
+                            )}
+                        </div>
                     </div>
 
                     {/* Vertical Divider */}
