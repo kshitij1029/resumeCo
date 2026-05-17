@@ -293,6 +293,7 @@ import React, { useEffect, useState } from 'react';
 import '../style/Home.scss';
 import AnimatedBackground from '../components/AnimatedBackground';
 import { Link, useNavigate } from 'react-router';
+import { useAuth } from '../../auth/hooks/useAuth';
 
 const row1Testimonials = [
   { name: 'Jordan Lee', handle: '@jordantalks', text: 'The custom interview plan completely streamlined my preparation process.' },
@@ -311,29 +312,39 @@ const row2Testimonials = [
 export default function Home() {
   const navigate = useNavigate();
   const [isVisible, setIsVisible] = useState(false);
+  const { user } = useAuth(); // Destructuring user from your global auth context
 
-  // PLACEHOLDER AUTH STATE: 
-  // Replace this with your actual global auth logic/context (e.g., checking token validity)
+  // This local state will control your conditional Navbar styling/rendering
   const [isLoggedIn, setIsLoggedIn] = useState(false); 
 
   useEffect(() => {
     setIsVisible(true);
     
-    // Optional check: read from localStorage if you handle basic login states there
-    const token = localStorage.getItem('token'); 
-    if (token) {
+    // If the user object exists from useAuth, set local isLoggedIn state to true
+    if (user) {
       setIsLoggedIn(true);
-    }
-  }, []);
-
-  // Handler for dynamic redirection based on Auth State
-  const handleStartClick = () => {
-    if (isLoggedIn) {
-      navigate('/generate'); // Redirects straight to generate page if logged in
     } else {
-      navigate('/login'); // Redirects to login page if not logged in
+      setIsLoggedIn(false);
+    }
+  }, [user]); // Added [user] as a dependency so it updates instantly when a user logs in or out
+
+  const handleGetStarted = () => {
+    // Now using the updated isLoggedIn state directly for clean routing consistency
+    if (isLoggedIn) {
+      navigate('/generate');
+    } else {
+      navigate('/Login', { state: { from: '/generate' } });
     }
   };
+
+  // // Handler for dynamic redirection based on Auth State
+  // const handleStartClick = () => {
+  //   if (isLoggedIn) {
+  //     navigate('/generate'); // Redirects straight to generate page if logged in
+  //   } else {
+  //     navigate('/login'); // Redirects to login page if not logged in
+  //   }
+  // };
 
   const handleScroll = (e, id) => {
     e.preventDefault();
@@ -385,10 +396,29 @@ export default function Home() {
           <a href="#testimonials" onClick={(e) => handleScroll(e, 'testimonials')}>Testimonials</a>
         </div>
         <div className="nav-actions">
-          {/* Linked to Auth logic handler */}
-          <button className="btn-secondary" onClick={handleStartClick}>Get started</button>
-          {!isLoggedIn && (
-            <button className="btn-outline" onClick={() => navigate("/Login")}>Login</button>
+          
+          {/* Conditional Rendering based on Authentication State */}
+          {!isLoggedIn ? (
+            <>
+              {/* Only shown when NOT logged in */}
+              <button className="btn-secondary" onClick={handleGetStarted}>
+                Get started
+              </button>
+              <button className="btn-outline" onClick={() => navigate("/Login")}>
+                Login
+              </button>
+            </>
+          ) : (
+            /* Only shown when logged in */
+            <div className="profile-container" style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+              <div className="profile-icon">
+                {/* Extracts the first letter of the username */}
+                {user?.username ? user.username.charAt(0) : 'U'}
+              </div>
+              <span className="profile-username" style={{ fontWeight: '500', color: '#8d9cb0' }}>
+                {user?.username || "User"}
+              </span>
+            </div>
           )}
         </div>
       </nav>
@@ -408,7 +438,7 @@ export default function Home() {
         
         <div className="hero-cta-group">
           {/* Linked to Auth logic handler */}
-          <button className="btn-primary-green" onClick={handleStartClick}>Get started →</button>
+          <button className="btn-primary-green" onClick={handleGetStarted}>Generate Report →</button>
         </div>
 
         <div className="trust-footer">

@@ -94,6 +94,7 @@ body {
   }
 
   .nav-actions {
+    display:flex;
     button {
       padding: 10px 20px;
       border-radius: 25px;
@@ -125,6 +126,20 @@ body {
         background: rgba(255, 255, 255, 0.05);
         border-color: $text-muted;
       }
+    }
+
+    .profile-icon{
+      width: 35px;
+      height: 35px;
+      border-radius: 50%;
+      background-color: #e01f61; 
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: bold;
+      font-size: 14px;
+      text-transform: uppercase;
     }
   }
 }

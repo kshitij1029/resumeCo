@@ -2,15 +2,19 @@ import React, { useState, useRef } from 'react'
 import "../style/Generate.scss"
 import { useInterview } from '../hooks/useInterview.js'
 import { useNavigate } from 'react-router'
+import { Home, History } from 'lucide-react' // Import Home icon
 
 const Generate = () => {
 
-    const { loading, generateReport,reports } = useInterview()
+    const { loading, generateReport, reports } = useInterview()
     const [ jobDescription, setJobDescription ] = useState("")
     const [ selfDescription, setSelfDescription ] = useState("")
     const resumeInputRef = useRef()
 
     const navigate = useNavigate()
+    
+    // State to manage the sliding drawer visibility
+    const [ isDrawerOpen, setIsDrawerOpen ] = useState(false)
 
     const handleGenerateReport = async () => {
         const resumeFile = resumeInputRef.current.files[ 0 ]
@@ -28,6 +32,34 @@ const Generate = () => {
 
     return (
         <div className='home-page'>
+            {/* Top Navigation Row - Separating Home to Left and History to Right */}
+            {/* Full-width Top Navigation Anchor Bar */}
+            <div className="top-nav-bar">
+                
+                {/* 1. First Child = Left Anchor: Home Button */}
+                <button 
+                    onClick={() => navigate("/")} 
+                    className="home1-nav-btn"
+                    aria-label="Go to Home"
+                >
+                    <Home size={20} />
+                    <span>Home</span>
+                </button>
+
+                {/* 2. Second Child = Right Anchor: History Button */}
+                {reports && reports.length > 0 ? (
+                    <button 
+                        onClick={() => setIsDrawerOpen(true)}
+                        className="home1-nav-btn recents-toggle-btn"
+                    >
+                        <History size={20} />
+                        <span>History ({reports.length})</span>
+                    </button>
+                ) : (
+                    <div /> /* Keeps space-between alignment tracking perfectly when history is empty */
+                )}
+                
+            </div>
 
             {/* Page Header */}
             <header className='page-header'>
@@ -122,13 +154,30 @@ const Generate = () => {
                 </div>
             </div>
 
-            {/* Recent Reports List */}
-            {reports.length > 0 && (
-                <section className='recent-reports'>
-                    <h2>My Recent Interview Plans</h2>
+            {/* Backdrop Dim Overlay */}
+            {isDrawerOpen && reports && reports.length > 0 && (
+                <div className='drawer-overlay' onClick={() => setIsDrawerOpen(false)}></div>
+            )}
+
+            {/* Neo-Magenta Dark Theme Recent Reports Drawer */}
+            {reports && reports.length > 0 && (
+                <section className={`recent-reports-drawer ${isDrawerOpen ? 'open' : ''}`}>
+                    <div className='drawer-header'>
+                        <h2>My Recent Interview Plans</h2>
+                        <button className='btn-close-drawer' onClick={() => setIsDrawerOpen(false)}>
+                            &times;
+                        </button>
+                    </div>
                     <ul className='reports-list'>
                         {reports.map(report => (
-                            <li key={report._id} className='report-item' onClick={() => navigate(`/interview/${report._id}`)}>
+                            <li 
+                                key={report._id} 
+                                className='report-item' 
+                                onClick={() => {
+                                    navigate(`/interview/${report._id}`);
+                                    setIsDrawerOpen(false); 
+                                }}
+                            >
                                 <h3>{report.title || 'Untitled Position'}</h3>
                                 <p className='report-meta'>Generated on {new Date(report.createdAt).toLocaleDateString()}</p>
                                 <p className={`match-score ${report.matchScore >= 80 ? 'score--high' : report.matchScore >= 60 ? 'score--mid' : 'score--low'}`}>Match Score: {report.matchScore}%</p>
