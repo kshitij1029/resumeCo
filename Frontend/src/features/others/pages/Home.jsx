@@ -3,6 +3,7 @@ import '../style/Home.scss';
 import AnimatedBackground from '../components/AnimatedBackground';
 import { Link, useNavigate } from 'react-router';
 import { useAuth } from '../../auth/hooks/useAuth';
+import features from '../../../../public/features.jpg'
 
 const row1Testimonials = [
   { 
@@ -209,7 +210,7 @@ export default function Home() {
             </div>
             <div className="floating-neon-graphic">
               <img 
-                src="https://images.pexels.com/photos/5439449/pexels-photo-5439449.jpeg" 
+                src={features}
                 alt="AI Resume Neon-Magnetic Dark Portal Platform" 
               />
             </div>
