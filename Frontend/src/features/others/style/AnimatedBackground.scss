@@ -1,0 +1,10 @@
+.interactive-fluid-canvas {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 0; // Forces background element behavior behind markup items
+  pointer-events: none; // Allows cursor interactions to pass straight through to forms/inputs
+  background-color: #0d1117;
+}

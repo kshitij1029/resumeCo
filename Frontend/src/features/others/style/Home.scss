@@ -1,0 +1,1079 @@
+
+
+/* Core Configurations & Theme Colors (Based on the Dark Theme Image) */
+$bg-dark: #0d1117;           // Main dark background
+$card-bg: #12162000;           // Slightly lighter dark for form cards
+$primary-pink: #ff2a75;      // Neon magenta/pink headline and accent color
+$primary-pink-hover: #e01f61; // Darker pink for hover states
+$text-light: #f8fafc;        // Main crisp white text
+$text-muted: #64748b;        // Muted gray for placeholders and subtext
+$border-color: rgba(255, 255, 255, 0.08); // Subtle container borders
+$alert-blue: rgba(30, 58, 138, 0.4);      // Info message card background
+
+body {
+  margin: 0;
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  color: $text-light;
+  background-color: $bg-dark;
+  overflow-x: hidden;
+}
+
+.landing-container {
+  background-color: $bg-dark;
+  min-height: 100vh;
+  opacity: 0;
+  transform: translateY(10px);
+
+  /* Global Entrance Animation Trigger */
+  &.fade-in {
+    opacity: 1;
+    transform: translateY(0);
+    transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+  }
+}
+
+/* Top Banner Styling */
+.top-banner {
+  background: rgba(255, 42, 117, 0.1);
+  text-align: center;
+  padding: 8px 0;
+  font-size: 14px;
+  font-weight: 500;
+  color: $primary-pink;
+  border-bottom: 1px solid rgba($primary-pink, 0.2);
+
+  .badge {
+    background: $primary-pink;
+    color: white;
+    padding: 2px 8px;
+    border-radius: 12px;
+    font-size: 11px;
+    margin-right: 6px;
+    font-weight: 600;
+  }
+}
+
+/* Clean Dark Mode Sticky Navbar */
+.navbar {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  padding: 20px 90px;
+  background: rgba($bg-dark, 0.8);
+  backdrop-filter: blur(10px);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  border-bottom: 1px solid $border-color;
+
+  .logo {
+    font-size: 24px;
+    font-weight: 800;
+    letter-spacing: -0.5px;
+    margin-right: 100px;
+    color: $text-light;
+
+    .dot {
+      color: $primary-pink;
+    }
+  }
+
+  .nav-links {
+    a {
+      margin: 0 18px;
+      text-decoration: none;
+      color: $text-muted;
+      font-weight: 500;
+      font-size: 15px;
+      transition: color 0.3s;
+
+      &:hover {
+        color: $text-light;
+      }
+    }
+  }
+
+  .nav-actions {
+    button {
+      padding: 10px 20px;
+      border-radius: 25px;
+      font-weight: 600;
+      cursor: pointer;
+      font-size: 14px;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .btn-secondary {
+      background: $primary-pink;
+      color: white;
+      border: none;
+      margin-right: 12px;
+
+      &:hover {
+        background: $primary-pink-hover;
+        transform: translateY(-1px);
+        box-shadow: 0 4px 12px rgba($primary-pink, 0.3);
+      }
+    }
+
+    .btn-outline {
+      background: transparent;
+      color: $text-light;
+      border: 1px solid $border-color;
+
+      &:hover {
+        background: rgba(255, 255, 255, 0.05);
+        border-color: $text-muted;
+      }
+    }
+  }
+}
+
+/* Hero & Creation Header Section */
+.hero-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: 80px 10% 40px 10%;
+
+  .user-count-badge {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: rgba($card-bg, 0.6);
+    padding: 6px 16px;
+    border-radius: 30px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    font-size: 13px;
+    font-weight: 500;
+    border: 1px solid $border-color;
+  }
+
+  h1 {
+    font-size: 56px;
+    font-weight: 800;
+    line-height: 1.15;
+    letter-spacing: -1px;
+    margin: 24px 0;
+    color: $text-light;
+
+    .highlight-text {
+      color: $primary-pink;
+    }
+  }
+
+  .hero-subtitle {
+    font-size: 16px;
+    color: $text-muted;
+    max-width: 600px;
+    margin-bottom: 32px;
+    line-height: 1.5;
+  }
+
+  .hero-cta-group {
+    display: flex;
+    gap: 16px;
+    margin-bottom: 60px;
+
+    .btn-primary-green { // Serves as the primary dark theme layout action
+      background: $primary-pink;
+      color: white;
+      padding: 14px 28px;
+      border: none;
+      border-radius: 30px;
+      font-size: 16px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+
+      &:hover {
+        background: $primary-pink-hover;
+        box-shadow: 0 4px 20px rgba($primary-pink, 0.4);
+      }
+    }
+
+    .btn-video {
+      background: $card-bg;
+      border: 1px solid $border-color;
+      color: $text-light;
+      padding: 14px 28px;
+      border-radius: 30px;
+      font-size: 16px;
+      font-weight: 600;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      transition: all 0.2s;
+
+      &:hover {
+        background: rgba(255, 255, 255, 0.05);
+        border-color: $text-muted;
+      }
+    }
+  }
+
+  .trust-footer {
+    margin-top: 20px;
+    color: $text-muted;
+    font-size: 13px;
+
+    .brand-logos {
+      display: flex;
+      gap: 40px;
+      margin-top: 16px;
+      opacity: 0.4;
+      font-weight: 700;
+      font-size: 16px;
+      color: $text-light;
+    }
+  }
+}
+
+/* Shared Global Utility Selectors */
+.section-tag {
+  background: rgba($primary-pink, 0.1);
+  color: $primary-pink;
+  padding: 6px 14px;
+  border-radius: 20px;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.section-subtitle {
+  color: $text-muted;
+  max-width: 650px;
+  text-align: center;
+  margin: 12px auto 38px auto;
+  font-size: 16px;
+  line-height: 1.5;
+}
+
+/* Features Component Section (Two-Column Interactive Area) */
+.features-section {
+  padding: 90px 10%;
+  padding-bottom: 10px;
+  text-align: center;
+  background-color: #0d1117;
+
+  h2 {
+    font-size: 38px;
+    font-weight: 800;
+    margin-top: 16px;
+    letter-spacing: -0.5px;
+  }
+
+  .features-grid {
+    display: grid;
+    grid-template-columns: 1.2fr 1fr;
+    gap: 20px;
+    align-items: center;
+    margin-top: 10px;
+    padding: 20px;
+    border-radius: 20px;
+
+    /* Right Side: Process / Input Info Lists */
+    .features-list {
+      display: flex;
+      flex-direction: column;
+      gap: 30px;
+
+      .feature-item {
+        display: flex;
+        gap: 20px;
+        padding: 24px;
+        background: rgba($bg-dark, 0.4);
+        border-radius: 12px;
+        border: 1px solid $border-color;
+        text-align: left;
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+
+        &:hover {
+          transform: translateY(-2px);
+          border-color: rgba($primary-pink, 0.3);
+          background: rgba($card-bg, 0.8);
+        }
+
+        /* Standard Alert/Status Information Row mapping */
+        &:last-child {
+          background: $alert-blue;
+          border-color: rgba(59, 130, 246, 0.2);
+          
+          .feature-icon {
+            color: #60a5fa;
+            background: rgba(59, 130, 246, 0.1);
+          }
+        }
+
+        .feature-icon {
+          background: rgba(255, 255, 255, 0.05);
+          color: $primary-pink;
+          width: 48px;
+          height: 48px;
+          border-radius: 10px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          font-size: 20px;
+          flex-shrink: 0;
+        }
+
+        h3 {
+          margin: 0 0 6px 0;
+          font-size: 16px;
+          font-weight: 700;
+          color: $text-light;
+        }
+
+        p {
+          margin: 0;
+          color: $text-muted;
+          font-size: 14px;
+          line-height: 1.5;
+        }
+      }
+    }
+  }
+}
+
+/* Testimonials Layout Marquee Section */
+.testimonials-section {
+  text-align: center;
+  overflow: hidden;
+
+  h2 {
+    font-size: 38px;
+    font-weight: 800;
+    margin-top: 16px;
+    letter-spacing: -0.5px;
+  }
+
+  .testimonials-track {
+    display: flex;
+    gap: 24px;
+    padding: 20px;
+    width: max-content;
+    animation: scrollMarquee 35s linear infinite;
+
+    &:hover {
+      animation-play-state: paused;
+    }
+
+    .testimonial-card {
+      background: $card-bg;
+      border: 1px solid $border-color;
+      padding: 28px;
+      border-radius: 16px;
+      width: 320px;
+      text-align: left;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+      transition: border-color 0.3s;
+
+      &:hover {
+        border-color: rgba($primary-pink, 0.4);
+      }
+
+      .user-info {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        margin-bottom: 16px;
+
+        .user-avatar {
+          background: rgba(255, 255, 255, 0.05);
+          color: $text-muted;
+          width: 42px;
+          height: 42px;
+          border-radius: 50%;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          border: 1px solid $border-color;
+        }
+
+        h4 {
+          margin: 0;
+          font-size: 15px;
+          font-weight: 700;
+          color: $text-light;
+        }
+
+        span {
+          font-size: 13px;
+          color: $text-muted;
+        }
+
+        .verified-badge {
+          color: $primary-pink;
+          font-size: 12px;
+          margin-left: 4px;
+        }
+      }
+
+      .card-body {
+        margin: 0;
+        color: rgba($text-light, 0.8);
+        font-size: 14px;
+        line-height: 1.6;
+      }
+    }
+  }
+}
+
+/* CSS Keyframe Animations */
+@keyframes scrollMarquee {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+/* Media Breakpoint Rules */
+@media (max-width: 968px) {
+  .features-section {
+    padding: 40px 5%;
+    
+    .features-grid {
+      grid-template-columns: 1fr;
+      padding: 20px;
+    }
+  }
+  
+  .navbar .nav-links {
+    display: none;
+  }
+
+  .hero-section h1 {
+    font-size: 36px;
+  }
+}
+
+
+
+
+
+/* Variables from your Dark Theme setup */
+$bg-dark: #0d1117;
+$card-bg: #121620;
+$primary-pink: #ff2a75;
+$border-color: rgba(255, 255, 255, 0.08);
+$text-light: #f8fafc;
+$text-muted: #64748b;
+
+.testimonials-section {
+  padding: 20px 0;
+  text-align: center;
+  background-color: $bg-dark;
+
+  h2 {
+    font-size: 38px;
+    font-weight: 800;
+    margin-top: 16px;
+    letter-spacing: -0.5px;
+    color: $text-light;
+  }
+
+  /* Main Wrapper covering tracks and masking scrollbars */
+  .marquee-container-wrapper {
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+    padding: 20px 0;
+    display: flex;
+    flex-direction: column;
+    gap: 28px; // Gap between row 1 and row 2
+
+    /* Blur & Fade Overlays seamlessly fading into $bg-dark */
+    .fade-overlay {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      width: 15%; // Controls how wide the blur emergence area is
+      z-index: 5;
+      pointer-events: none;
+
+      &.left {
+        left: 0;
+        background: linear-gradient(to right, $bg-dark 20%, rgba($bg-dark, 0.8) 50%, transparent 100%);
+        backdrop-filter: blur(4px);
+        mask-image: linear-gradient(to right, black 30%, transparent 100%);
+      }
+
+      &.right {
+        right: 0;
+        background: linear-gradient(to left, $bg-dark 20%, rgba($bg-dark, 0.8) 50%, transparent 100%);
+        backdrop-filter: blur(4px);
+        mask-image: linear-gradient(to left, black 30%, transparent 100%);
+      }
+    }
+  }
+
+  .testimonials-row {
+    display: flex;
+    width: 100%;
+    overflow: hidden;
+  }
+
+  /* Base Track styles */
+  .testimonials-track {
+    display: flex;
+    gap: 24px;
+    width: max-content;
+
+    &:hover {
+      animation-play-state: paused; // Pause animation on hover interaction
+    }
+
+    /* Direction One: Left */
+    &.scroll-left {
+      animation: marqueeLeft 35s linear infinite;
+    }
+
+    /* Direction Two: Right */
+    &.scroll-right {
+      animation: marqueeRight 35s linear infinite;
+    }
+  }
+
+  /* Consistent Testimonial Card Styling */
+  .testimonial-card {
+    background: $card-bg;
+    border: 1px solid $border-color;
+    padding: 28px;
+    border-radius: 16px;
+    width: 340px;
+    text-align: left;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    transition: border-color 0.3s, transform 0.3s;
+    flex-shrink: 0;
+
+    &:hover {
+      border-color: rgba($primary-pink, 0.5);
+      transform: translateY(-2px);
+    }
+
+    .user-info {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 16px;
+
+      .user-avatar {
+        background: rgba(255, 255, 255, 0.05);
+        color: $text-muted;
+        width: 42px;
+        height: 42px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border: 1px solid $border-color;
+      }
+
+      h4 {
+        margin: 0;
+        font-size: 15px;
+        font-weight: 700;
+        color: $text-light;
+        display: flex;
+        align-items: center;
+      }
+
+      span {
+        font-size: 13px;
+        color: $text-muted;
+      }
+
+      .verified-badge {
+        color: $primary-pink;
+        font-size: 12px;
+        margin-left: 6px;
+      }
+    }
+
+    .card-body {
+      margin: 0;
+      color: rgba($text-light, 0.85);
+      font-size: 14px;
+      line-height: 1.6;
+    }
+  }
+}
+
+/* Linear Infinite Marquee Keyframes */
+@keyframes marqueeLeft {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    /* Moves exactly halfway through the duplicated array combination */
+    transform: translateX(-50%);
+  }
+}
+
+@keyframes marqueeRight {
+  0% {
+    transform: translateX(-50%);
+  }
+  100% {
+    transform: translateX(0);
+  }
+}
+
+
+
+
+/* Add these modifications inside your existing dark-theme Home.scss bundle */
+
+.landing-container {
+  position: relative;
+  background-color: transparent; // Keeps the canvas waves visible underneath
+  z-index: 1;
+}
+
+/* Secondary Micro-Animation: Pulse Glow Accent Effect for Primary CTA Buttons */
+.btn-primary-green {
+  position: relative;
+  overflow: hidden;
+  animation: neonPulseGlow 3s infinite alternate ease-in-out;
+
+  &::after {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -60%;
+    width: 30%;
+    height: 200%;
+    background: linear-gradient(
+      to right,
+      rgba(255, 255, 255, 0) 0%,
+      rgba(255, 255, 255, 0.2) 50%,
+      rgba(255, 255, 255, 0) 100__
+    );
+    transform: rotate(25deg);
+    transition: none;
+  }
+
+  /* Shimmer sweep animation when user rests mouse over the item */
+  &:hover::after {
+    left: 130%;
+    transition: all 0.6s cubic-bezier(0.3, 1, 0.2, 1);
+  }
+}
+
+/* Interactive Card hover micro-lifting effect */
+.testimonial-card, .feature-item {
+  backdrop-filter: blur(8px);
+  background: rgba(18, 22, 32, 0.65) !important; // Makes standard containers translucent 
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1) !important;
+
+  &:hover {
+    transform: translateY(-6px) scale(1.02) !important;
+    box-shadow: 0 15px 35px rgba(255, 42, 117, 0.12) !important;
+  }
+}
+
+/* Visual Keyframe Sequences */
+@keyframes neonPulseGlow {
+  0% {
+    box-shadow: 0 4px 14px rgba(255, 42, 117, 0.3);
+  }
+  100% {
+    box-shadow: 0 4px 28px rgba(255, 42, 117, 0.65), 0 0 10px rgba(255, 42, 117, 0.2);
+  }
+}
+
+
+
+/* 1. Ensure the container layout has a lower base stack index but establishes a clear coordinate layout space */
+.landing-container {
+  position: relative;
+  background-color: transparent; 
+  z-index: 1; // Higher than the fixed canvas backplate (z-index: 0)
+}
+
+/* 2. Explicitly force all key content components to stay crisp and readable above any lingering canvas alphas */
+.top-banner,
+.navbar,
+.hero-section,
+.features-section,
+.testimonials-section {
+  position: relative;
+  z-index: 10; // High value to prevent canvas trails from bleeding over layout lines
+}
+
+/* 3. Increase font weights and update primary layout body colors for deep dark contrast */
+h1, h2, h3, h4 {
+  color: #ffffff !important; // Absolute high-contrast white text for headers
+  position: relative;
+  z-index: 12;
+}
+
+.hero-subtitle,
+.section-subtitle {
+  color: #94a3b8 !important; // Brighter slate gray for clear paragraph reading
+  position: relative;
+  z-index: 12;
+}
+
+/* 4. Keep your translucent cards elevated with a crisp border frame line */
+.testimonial-card, 
+.feature-item {
+  position: relative;
+  z-index: 15;
+  backdrop-filter: blur(12px); // Strong glassmorphism blurring factor to mask background wave disruptions underneath letters
+  background: rgba(18, 22, 32, 0.75) !important; // Dark tint to make text pop effortlessly
+  border: 1px solid rgba(255, 255, 255, 0.12) !important; 
+  
+  .card-body {
+    color: #e2e8f0 !important; // Crisp off-white text inside testimonial descriptions
+  }
+}
+
+/* 5. Set higher layer mapping for the edge-fade overlay masks */
+.marquee-container-wrapper {
+  .fade-overlay {
+    z-index: 20 !important; // Floats right over the text cards running behind it
+  }
+}
+
+
+
+
+/* Add these modifications into your existing dark-theme Home.scss bundle */
+$primary-pink: #ff2a75;
+
+/* Subtle backplates for the text modules so it looks incredibly clean */
+.hero-section {
+  h1 {
+    font-size: 56px;
+    font-weight: 800;
+    letter-spacing: -1px;
+    // Glowing text drop effect matching the active theme elements
+    text-shadow: 0 0 40px rgba(255, 42, 117, 0.15), 0 2px 10px rgba(0, 0, 0, 0.5);
+  }
+}
+
+/* Give glassmorphic elements a nice sharp contrast border */
+.testimonial-card, 
+.feature-item,
+.video-preview-card {
+  backdrop-filter: blur(12px) saturate(140%);
+  background: rgba(18, 22, 32, 0.6) !important; // Translucent charcoal fill
+  border: 1px solid rgba(255, 255, 255, 0.08) !important;
+  transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1) !important;
+
+  &:hover {
+    transform: translateY(-5px) scale(1.01) !important;
+    border-color: rgba($primary-pink, 0.4) !important;
+    // Pulls a subtle neon aura glow behind the focused layout node
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3), 0 0 30px rgba(255, 42, 117, 0.08) !important;
+  }
+}
+
+
+
+/* --- Neon Portal Layout & Active Ping Effects --- */
+.neon-portal-container {
+  position: relative;
+  height: 520px;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: visible;
+  perspective: 1200px;
+  /* Ambient dark glow base */
+  background: radial-gradient(circle at center, rgba(236, 72, 153, 0.05) 0%, transparent 65%);
+
+  /* Image float wrap */
+  .floating-neon-graphic {
+    width: 95%;
+    max-width: 960px;
+    z-index: 2;
+    transform-style: preserve-3d;
+    animation: smoothNeonFloat 6s ease-in-out infinite alternate;
+    transition: filter 0.3s ease, transform 0.3s ease;
+
+    img {
+      width: 98%;
+      height: 378px;
+      display: block;
+      object-fit: contain;
+      border: 2px solid #121620;
+      border-radius: 40px;
+    }
+
+    &:hover {
+      transform: scale(1.03) rotateX(3deg) rotateY(-3deg);
+    }
+  }
+
+  /* Active Live Portal Ripple Circle (Background) */
+  .portal-ping-ring {
+    position: absolute;
+    width: 300px;
+    height: 300px;
+    border-radius: 50%;
+    border: 2px solid rgba(236, 72, 153, 0.35);
+    z-index: 1;
+    animation: portalRadarPulse 3.5s cubic-bezier(0.25, 0.46, 0.45, 0.94) infinite;
+    pointer-events: none;
+  }
+
+  /* Portal Floating Indicator Badge */
+  .portal-status-badge {
+    position: absolute;
+    top: 5%;
+    left: 4%;
+    z-index: 3;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 8px 16px;
+    background: rgba(10, 15, 30, 0.7);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(236, 72, 153, 0.35);
+    border-radius: 30px;
+    color: #f1f5f9;
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+
+    .ping-dot {
+      width: 8px;
+      height: 8px;
+      background-color: #ec4899;
+      border-radius: 50%;
+      box-shadow: 0 0 8px #ec4899;
+      animation: badgeLedGlow 1.2s ease-in-out infinite alternate;
+    }
+  }
+}
+
+/* --- Dynamic Motion Keyframes --- */
+
+
+
+@keyframes portalRadarPulse {
+  0% {
+    transform: scale(0.5);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1.5);
+    opacity: 0;
+    border-color: rgba(59, 130, 246, 0);
+  }
+}
+
+@keyframes badgeLedGlow {
+  0% { transform: scale(0.85); opacity: 0.4; filter: drop-shadow(0 0 2px #ec4899); }
+  100% { transform: scale(1.15); opacity: 1; filter: drop-shadow(0 0 8px #ec4899); }
+}
+
+/* Responsive Optimization overrides */
+@media (max-width: 1024px) {
+  .neon-portal-container {
+    height: 420px;
+    .floating-neon-graphic { max-width: 360px; }
+    .portal-ping-ring { width: 220px; height: 220px; }
+  }
+}
+
+
+/* --- Neon-Magnetic Dark Footer Styles --- */
+.landing-footer {
+  position: relative;
+  background-color: #0b0f19; /* Deep tech slate dark theme background */
+  padding: 40px 2% 70px 8%;
+  overflow: hidden;
+  font-family: inherit;
+  color: #94a3b8;
+
+  /* Ambient magenta neon background halo */
+  .footer-glow-overlay {
+    position: absolute;
+    bottom: -150px;
+    right: -100px;
+    width: 450px;
+    height: 450px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(236, 72, 153, 0.06) 0%, transparent 70%);
+    pointer-events: none;
+    z-index: 1;
+  }
+
+  .footer-top {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 40px;
+    margin-bottom: 60px;
+  }
+
+  /* Brand Branding Profile Layout */
+  .footer-brand-col {
+    flex: 1;
+    min-width: 260px;
+    max-width: 340px;
+    margin-right: 120px;
+
+    .logo {
+      font-size: 1.8rem;
+      font-weight: 800;
+      color: #ffffff;
+      margin-bottom: 18px;
+      letter-spacing: -0.03em;
+
+      .dot {
+        color: #ec4899; /* Vibrant theme magenta dot */
+        text-shadow: 0 0 10px rgba(236, 72, 153, 0.6);
+      }
+    }
+
+    .brand-desc {
+      font-size: 0.9rem;
+      line-height: 1.6;
+      margin-bottom: 24px;
+      color: #94a3b8;
+    }
+
+    /* Live Operational Health Badge */
+    .footer-status-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 12px;
+      background: #e01f6213;
+      border: 1px solid #da658e;
+      border-radius: 20px;
+      color: #da658e;
+      font-size: 0.75rem;
+      font-weight: 600;
+
+      .pulse-indicator {
+        width: 6px;
+        height: 6px;
+        background-color: #e01f61;
+        border-radius: 50%;
+        box-shadow: 0 0 8px #ec4899;
+        animation: statusPulse 1.8s infinite ease-in-out;
+      }
+    }
+  }
+
+  /* Category Columns Block */
+  .footer-links-grid {
+    display: flex;
+    gap: 140px;
+    flex-wrap: wrap;
+
+    .links-column {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+
+      h4 {
+        color: #ffffff;
+        font-size: 0.95rem;
+        font-weight: 700;
+        margin-bottom: 8px;
+        letter-spacing: 0.03em;
+        text-transform: uppercase;
+      }
+
+      a {
+        color: #94a3b8;
+        font-size: 0.88rem;
+        text-decoration: none;
+        transition: color 0.2s ease, transform 0.2s ease;
+
+        &:hover {
+          color: #ec4899;
+          transform: translateX(3px);
+        }
+      }
+    }
+  }
+
+
+  /* Border / Foot Rules divider line */
+  .footer-divider {
+    border: 0;
+    height: 1px;
+    background: linear-gradient(to right, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.05));
+    margin-bottom: 30px;
+  }
+
+  /* Copyright Alignment Wrap */
+  .footer-bottom {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
+    font-size: 0.82rem;
+
+    .copyright {
+      color: #64748b;
+    }
+
+    .footer-legal-links {
+      display: flex;
+      gap: 24px;
+
+      a {
+        color: #64748b;
+        text-decoration: none;
+        transition: color 0.2s ease;
+
+        &:hover {
+          color: #ec4899;
+        }
+      }
+    }
+  }
+}
+
+/* --- Pulse State Animations --- */
+@keyframes statusPulse {
+  0%, 100% { transform: scale(1); opacity: 1; }
+  50% { transform: scale(1.3); opacity: 0.4; }
+}
+
+/* --- Responsive Scaling Structural Overrides --- */
+@media (max-width: 991px) {
+  .landing-footer {
+    padding: 60px 5% 30px 5%;
+    
+    .footer-links-grid {
+      gap: 40px;
+    }
+  }
+}
+
+@media (max-width: 640px) {
+  .landing-footer {
+    .footer-top {
+      flex-direction: column;
+      gap: 45px;
+    }
+    .footer-links-grid {
+      justify-content: space-between;
+      width: 100%;
+    }
+    .footer-bottom {
+      flex-direction: column-reverse;
+      align-items: flex-start;
+    }
+  }
+}
