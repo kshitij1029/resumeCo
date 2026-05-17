@@ -573,3 +573,47 @@ $transition: all 0.3s ease;
   }
 }
 
+
+
+
+/* Target the notification elements mounted onto the button container */
+.button-ping-badge {
+  position: absolute;
+  top: -4px;   /* Positions badge slightly overlapping the top-right corner of the button */
+  right: -4px;
+  display: flex;
+  height: 8px;
+  width: 8px;
+  z-index: 5;  /* Ensures it floats cleanly above the button border lines */
+
+  /* The outer radiating ripple ring */
+  &__pulse {
+    position: absolute;
+    inline-size: 100%;
+    block-size: 100%;
+    border-radius: 50%;
+    background-color: #ff007f; // High-glow neo-magenta
+    opacity: 0.75;
+    
+    // Endless looping pulse sequence
+    animation: buttonPingTimeline 1.2s cubic-bezier(0, 0, 0.2, 1) infinite;
+  }
+
+  /* The core static center dot */
+  &__dot {
+    position: relative;
+    display: inline-flex;
+    border-radius: 50%;
+    height: 8px;
+    width: 8px;
+    background-color: #ff007f; // High-glow neo-magenta
+  }
+}
+
+/* Keyframe for the outer scaling ring */
+@keyframes buttonPingTimeline {
+  75%, 100% {
+    transform: scale(2.8);
+    opacity: 0;
+  }
+}

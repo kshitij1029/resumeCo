@@ -3,6 +3,7 @@ import "../style/Generate.scss"
 import { useInterview } from '../hooks/useInterview.js'
 import { useNavigate } from 'react-router'
 import { Home, History } from 'lucide-react' // Import Home icon
+import Loading from '../../others/components/Loading.jsx'
 
 const Generate = () => {
 
@@ -15,18 +16,26 @@ const Generate = () => {
     
     // State to manage the sliding drawer visibility
     const [ isDrawerOpen, setIsDrawerOpen ] = useState(false)
+    
+    // New separate state to track AI strategy creation specifically
+    const [ isGenerating, setIsGenerating ] = useState(false)
 
     const handleGenerateReport = async () => {
-        const resumeFile = resumeInputRef.current.files[ 0 ]
-        const data = await generateReport({ jobDescription, selfDescription, resumeFile })
-        navigate(`/interview/${data._id}`)
+        try {
+            setIsGenerating(true) // Turn on the loading screen immediately when clicked
+            const resumeFile = resumeInputRef.current.files[ 0 ]
+            const data = await generateReport({ jobDescription, selfDescription, resumeFile })
+            navigate(`/interview/${data._id}`)
+        } catch (error) {
+            console.error("Error generating report:", error)
+            setIsGenerating(false) // Fallback to turn off loading screen if API fails
+        }
     }
 
-    if (loading) {
+    // Displays the loader during initial layout fetching OR while AI engine calculates response
+    if (loading || isGenerating) {
         return (
-            <main className='loading-screen'>
-                <h1>Loading your interview plan...</h1>
-            </main>
+            <Loading/>
         )
     }
 
@@ -51,9 +60,16 @@ const Generate = () => {
                     <button 
                         onClick={() => setIsDrawerOpen(true)}
                         className="home1-nav-btn recents-toggle-btn"
+                        style={{ position: 'relative' }} // Ensures the badge anchors to the outer button border
                     >
                         <History size={20} />
-                        <span>History ({reports.length})</span>
+                        <span>History</span>
+
+                        {/* The Ping Animation Badge shifted onto the button layout frame */}
+                        <span className="button-ping-badge">
+                            <span className="button-ping-badge__pulse"></span>
+                            <span className="button-ping-badge__dot"></span>
+                        </span>
                     </button>
                 ) : (
                     <div /> /* Keeps space-between alignment tracking perfectly when history is empty */
