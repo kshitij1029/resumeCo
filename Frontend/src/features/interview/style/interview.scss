@@ -21,14 +21,27 @@ $severity-low: #3fb950;
 // ── Page Shell ────────────────────────────────────────────────────────────────
 .interview-page {
     width: 100%;
-    min-height: 100vh;
+    min-height: 95vh;
     background-color: $bg-page;
     color: $text-primary;
     font-family: $font-stack;
     display: flex;
     align-items: stretch;
     padding: 1.5rem;
+    padding-top: 4px;
     box-sizing: border-box;
+}
+.interview-page1 {
+    background-color: $bg-page;
+    color: $text-primary;
+    font-family: $font-stack;
+    box-sizing: border-box;
+    
+}
+.align1{
+    display:flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 // ── 3-Column Layout ───────────────────────────────────────────────────────────
@@ -119,12 +132,6 @@ $severity-low: #3fb950;
     max-height: calc(100vh - 3rem);
     padding-bottom: 5rem;
     align-items: flex-start;
-
-
-
-
-
-
 
 
     section {
@@ -475,5 +482,24 @@ $severity-low: #3fb950;
         color: $severity-low;
         background-color: rgba($severity-low, 0.1);
         border-color: rgba($severity-low, 0.25);
+    }
+}
+
+// ── Page Footer ───────────────────────────────────────────────────────────────
+.page-footer1 {
+    display: flex;
+    gap: 1.5rem;
+    margin-top: 30px;
+    margin-bottom: 40px;
+
+    a {
+        font-size: 0.8rem;
+        color: $text-muted;
+        text-decoration: none;
+        transition: color 0.2s;
+
+        &:hover {
+            color: $text-primary;
+        }
     }
 }

@@ -5,17 +5,49 @@ import { Link, useNavigate } from 'react-router';
 import { useAuth } from '../../auth/hooks/useAuth';
 
 const row1Testimonials = [
-  { name: 'Jordan Lee', handle: '@jordantalks', text: 'The custom interview plan completely streamlined my preparation process.' },
-  { name: 'Avery Johnson', handle: '@averywrites', text: 'Unbelievable accuracy with the AI-powered resumes. Landed three interviews in a week.' },
-  { name: 'Briar Martin', handle: '@neilstellar', text: 'The real-time analytics helped me track exactly where my portfolio needs improvement.' },
-  { name: 'Aniket Sharma', handle: '@sharma_codes', text: 'Incredible depth on the system design reviews. Highly recommend the premium tier.' },
+  { 
+    name: 'Jordan Lee', 
+    handle: '@jordantalks', 
+    text: 'The resume builder alone is incredible, but the custom interview preparation plan completely streamlined my entire application process.' 
+  },
+  { 
+    name: 'Avery Johnson', 
+    handle: '@averywrites', 
+    text: 'Unbelievable accuracy with the tailored AI resumes. Landed three technical interviews in a week because my profile finally aligned with what recruiters wanted.' 
+  },
+  { 
+    name: 'Briar Martin', 
+    handle: '@neilstellar', 
+    text: 'The real-time analytics and skill gap report pinpointed exactly where my portfolio was falling short. Absolute game-changer for engineering roles.' 
+  },
+  { 
+    name: 'Aniket Sharma', 
+    handle: '@sharma_codes', 
+    text: 'The depth of the interview prep questions generated for my specific stack was brilliant. Highly recommend resumeCO. for technical track preparation.' 
+  },
 ];
 
 const row2Testimonials = [
-  { name: 'Deepak Rawat', handle: '@deepak_rawat', text: 'The distributed system questions matched my tier-1 company rounds perfectly.' },
-  { name: 'Sarah Jenkins', handle: '@sarahtech', text: 'Simple, clean, and highly secure. The end-to-end encryption gives peace of mind.' },
-  { name: 'Kshitij Jha', handle: '@kj_dev', text: 'Exceptional UX/UI custom options. Building and iterating on variants is flawless.' },
-  { name: 'Elena Rostova', handle: '@elena_codes', text: 'The behavioral engine caught cognitive assessment patterns I completely missed.' },
+  { 
+    name: 'Deepak Rawat', 
+    handle: '@deepak_rawat', 
+    text: 'The technical questions matched my tier-1 company rounds perfectly. The step-by-step preparation roadmap is structured incredibly well.' 
+  },
+  { 
+    name: 'Sarah Jenkins', 
+    handle: '@sarahtech', 
+    text: 'I loved how the action plan broke down complex technical topics into daily, manageable milestones. Took away all my prep anxiety!' 
+  },
+  { 
+    name: 'Kshitij Jha', 
+    handle: '@kj_dev', 
+    text: 'Exceptional UI/UX flow. Being able to compare my resume against job descriptions and get an instant severity-coded skill gap analysis is flawless.' 
+  },
+  { 
+    name: 'Elena Rostova', 
+    handle: '@elena_codes', 
+    text: 'The behavioral evaluation caught critical blind spots in my communication patterns that I completely missed during previous mock rounds.' 
+  },
 ];
 
 export default function Home() {
@@ -186,22 +218,22 @@ export default function Home() {
             <div className="feature-item transition-card">
               <div className="feature-icon">🔑</div>
               <div>
-                <h3>Real-Time Analytics</h3>
-                <p>Get instant insights into your finances with live dashboards.</p>
+                <h3>AI Match Analytics</h3>
+                <p>Get instant insights on how well your resume matches target job roles.</p>
               </div>
             </div>
             <div className="feature-item transition-card">
               <div className="feature-icon">📝</div>
               <div>
-                <h3>Bank-Grade Security</h3>
-                <p>End-to-end encryption, 2FA, compliance with GDPR standards.</p>
+                <h3>Skill Gap Analysis</h3>
+                <p>Pinpoint missing technical and behavioral skills with instant reports.</p>
               </div>
             </div>
             <div className="feature-item transition-card">
               <div className="feature-icon">📥</div>
               <div>
-                <h3>Customizable Reports</h3>
-                <p>Export professional, audit-ready financial reports for tax or internal review.</p>
+                <h3>Custom Roadmaps</h3>
+                <p>Get structured, phase-by-phase action plans and interview questions.</p>
               </div>
             </div>
           </div>

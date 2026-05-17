@@ -11,7 +11,7 @@ const Generate = () => {
     const { loading, generateReport, reports } = useInterview()
     const [ jobDescription, setJobDescription ] = useState("")
     const [ selfDescription, setSelfDescription ] = useState("")
-    const resumeInputRef = useRef()
+
 
     const navigate = useNavigate()
     
@@ -20,6 +20,24 @@ const Generate = () => {
     
     // New separate state to track AI strategy creation specifically
     const [ isGenerating, setIsGenerating ] = useState(false)
+
+    const [uploadState, setUploadState] = useState('idle'); // 'idle' | 'uploading' | 'uploaded'
+    const [fileName, setFileName] = useState('');
+    const resumeInputRef = useRef(null);
+
+    const handleFileChange = (e) => {
+        const file = e.target.files[0];
+        if (!file) return;
+
+        setFileName(file.name);
+        setUploadState('uploading');
+
+        // Simulating an upload delay/filler animation (e.g., 1.5 seconds)
+        // Replace this setTimeout with your actual API upload logic if needed
+        setTimeout(() => {
+            setUploadState('uploaded');
+        }, 1500);
+    };
 
     const handleGenerateReport = async () => {
         try {
@@ -141,13 +159,85 @@ const Generate = () => {
                                 Upload Resume
                                 <span className='badge badge--best'>Best Results</span>
                             </label>
-                            <label className='dropzone' htmlFor='resume'>
-                                <span className='dropzone__icon'>
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="16 16 12 12 8 16" /><line x1="12" y1="12" x2="12" y2="21" /><path d="M20.39 18.39A5 5 0 0 0 18 9h-1.26A8 8 0 1 0 3 16.3" /></svg>
-                                </span>
-                                <p className='dropzone__title'>Click to upload or drag &amp; drop</p>
-                                <p className='dropzone__subtitle'>PDF or DOCX (Max 5MB)</p>
-                                <input ref={resumeInputRef} hidden type='file' id='resume' name='resume' accept='.pdf,.docx' />
+                            
+                            <label 
+                                className={`dropzone ${uploadState === 'uploaded' ? 'dropzone--success' : ''}`} 
+                                htmlFor='resume'
+                                style={{
+                                    position: 'relative',
+                                    overflow: 'hidden',
+                                    transition: 'all 0.3s ease',
+                                    // Border turns green during BOTH uploading and uploaded states
+                                    borderColor: (uploadState === 'uploading' || uploadState === 'uploaded') ? '#22c55e' : undefined,
+                                    backgroundColor: uploadState === 'uploaded' ? '#22c55e24' : undefined,
+                                    color: (uploadState === 'uploading' || uploadState === 'uploaded') ? '#16a34a' : undefined
+                                }}
+                            >
+                                {/* Green Filler Background Layer */}
+                                <div 
+                                    className="upload-filler"
+                                    style={{
+                                        position: 'absolute',
+                                        top: 0,
+                                        left: 0,
+                                        height: '100%',
+                                        backgroundColor: '#137134e1',
+                                        zIndex: 0,
+                                        transition: uploadState === 'uploading' ? 'width 1.5s ease-in-out' : 'none',
+                                        width: uploadState === 'idle' ? '0%' : uploadState === 'uploading' ? '100%' : '0%'
+                                    }}
+                                />
+
+                                {/* Main Content Area */}
+                                <div style={{ position: 'relative', zIndex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+                                    {/* Icon color now turns green during BOTH uploading and uploaded states */}
+                                    <span 
+                                        className='dropzone__icon' 
+                                        style={{ 
+                                            color: (uploadState === 'uploading' || uploadState === 'uploaded') ? '#22c55e' : undefined,
+                                            transition: 'color 0.3s ease'
+                                        }}
+                                    >
+                                        {uploadState === 'uploaded' ? (
+                                            /* Success Checkmark Icon */
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><polyline points="20 6 9 17 4 12" /></svg>
+                                        ) : (
+                                            /* Default Upload Icon (Turns green immediately when slider runs) */
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="16 16 12 12 8 16" /><line x1="12" y1="12" x2="12" y2="21" /><path d="M20.39 18.39A5 5 0 0 0 18 9h-1.26A8 8 0 1 0 3 16.3" /></svg>
+                                        )}
+                                    </span>
+
+                                    {uploadState === 'idle' && (
+                                        <>
+                                            <p className='dropzone__title'>Click to upload or drag &amp; drop</p>
+                                            <p className='dropzone__subtitle'>PDF or DOCX (Max 5MB)</p>
+                                        </>
+                                    )}
+
+                                    {uploadState === 'uploading' && (
+                                        <>
+                                            <p className='dropzone__title' style={{ color: '#cfe4d7', fontWeight: '600' }}>Uploading resume...</p>
+                                            <p className='dropzone__subtitle' style={{ color: '#cfe4d7' }}>{fileName}</p>
+                                        </>
+                                    )}
+
+                                    {uploadState === 'uploaded' && (
+                                        <>
+                                            <p className='dropzone__title' style={{ color: '#cfe4d7', fontWeight: '600' }}>Resume Uploaded Successfully!</p>
+                                            <p className='dropzone__subtitle' style={{ color: '#a0a3a1', fontWeight: '500' }}>{fileName}</p>
+                                        </>
+                                    )}
+                                </div>
+
+                                <input 
+                                    ref={resumeInputRef} 
+                                    hidden 
+                                    type='file' 
+                                    id='resume' 
+                                    name='resume' 
+                                    accept='.pdf,.docx' 
+                                    onChange={handleFileChange}
+                                />
                             </label>
                         </div>
 

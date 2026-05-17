@@ -1,0 +1,75 @@
+/* Container holding everything */
+.match-score__ring {
+    position: relative;
+    width: 105px;   /* Increased slightly to fit nicely based on your UI */
+    height: 105px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 7px auto; /* Centers the whole ring block horizontally */
+}
+
+/* Make SVG absolute so it acts as a background canvas layer */
+.match-score__svg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    transform: rotate(-90deg); /* Rotates circle to start from 12 o'clock */
+}
+
+.match-score__track {
+    fill: transparent; /* Changed to transparent to match your dark UI */
+    stroke: #222530;   /* Subtle dark track line */
+    stroke-width: 6px;
+}
+
+
+.match-score__fill {
+    fill: none;
+    stroke-width: 6px;
+    stroke-linecap: round;
+    
+    /* Forces browser to start at empty progress */
+    stroke-dashoffset: 251.32; 
+    
+    /* Smooth transition handled by CSS animation */
+    animation: fillProgress 1.2s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+/* Theme Color Rings based on your scoreColor variable */
+.match-score__ring.green .match-score__fill { stroke: #22c55e; }
+.match-score__ring.orange .match-score__fill { stroke: #f97316; }
+.match-score__ring.red .match-score__fill { stroke: #ef4444; }
+
+/* The overlay text layer - completely decoupled from SVG math */
+.match-score__content {
+    position: absolute;
+    display: flex;
+    align-items: baseline;
+    justify-content: center;
+    color: #ffffff;
+}
+
+.match-score__value {
+    font-size: 28px;
+    font-weight: bold;
+    font-family: inherit;
+}
+
+.match-score__pct {
+    font-size: 14px;
+    color: #8a8d98; /* Muted gray text color for the % sign */
+    margin-left: 2px;
+}
+
+/* Keyframe animation that reads the CSS custom variable */
+@keyframes fillProgress {
+    from {
+        stroke-dashoffset: 251.32; /* Start completely empty */
+    }
+    to {
+        stroke-dashoffset: var(--target-offset);
+    }
+}

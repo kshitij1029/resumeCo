@@ -558,6 +558,7 @@ $primary-pink: #ff2a75;
       margin-bottom: 14px;
       cursor: pointer;
       transition: transform 0.2s, box-shadow 0.2s, border-color 0.2s;
+      z-index: 10;
 
       h3 {
         margin: 0 0 6px 0;
@@ -597,7 +598,6 @@ $primary-pink: #ff2a75;
       }
 
       &:hover {
-        transform: translateX(-4px); // Slides slightly inward toward left viewport center
         border-color: #ff007f; // Focus highlight on hover
         box-shadow: 0 0 12px rgba(255, 0, 127, 0.2);
         
@@ -665,7 +665,7 @@ $primary-pink: #ff2a75;
     flex-direction: column;
     align-items: center;
     justify-content: flex-start; // Keeps content flow top-down naturally
-    padding: 8rem 1.5rem 3rem 1.5rem; /* Leaves clear breathing space below top navbar triggers */
+    padding: 6.5rem 1.5rem 3rem 1.5rem; /* Leaves clear breathing space below top navbar triggers */
     gap: 2.5rem;
     position: relative; 
 
