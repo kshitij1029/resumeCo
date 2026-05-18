@@ -6,10 +6,9 @@ const invokeGeminiAi = require("./src/services/ai.service");
 
 connectDB();
 
-
-app.listen(3000, () => {
-    console.log("Server is running on port 3000");
-});  
+app.get('/', (req, res) => {
+  res.send('API is running 🚀')
+})
 
 const port = process.env.PORT || 3000;
 app.listen(port,()=>{
