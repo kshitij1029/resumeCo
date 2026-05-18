@@ -1,26 +1,32 @@
-//Use of this File: Creating a server instance using app = express() and using middlewares as well as routes.
+//work of this file 
+//generate instance of server
+//using middleware, api,routes
 
-const express = require('express');
-const app = express();
-const cookieParser = require("cookie-parser");
-const cors = require("cors");
+const cors = require("cors")
+const express = require('express')
+const cookieParser = require('cookie-parser')
 
-/* Using middlewares here: */
-app.use(express.json());
+const app = express()
+
+// app.use(...) → tells Express to use that middleware for every request
+// express.json() → built-in middleware that parses JSON data
+app.use(express.json())
+app.use(cookieParser())
 app.use(cors({
-    origin: "http://localhost:5173",
-    credentials: true
-}));
+    origin:process.env.FRONTEND_URL,
+    credentials:true,
+    methods:["GET","POST","PUT","DELETE"],
+    allowedHeaders:["Content-Type","Authorization"]
+}))
+
+
+/* using all the routes here */
+const authRouter = require("./routes/auth.routes")
+app.use("/api/auth", authRouter)
+
+const interviewRouter = require("./routes/interview.routes")
+app.use("/api/interview", interviewRouter)
 
 
 
-/* require all the routes here: */
-const authRouter = require("./routes/auth.routes");
-const interviewRouter = require("./routes/interview.routes");
-
-/* Using all routes here */
-app.use(cookieParser());
-app.use("/api/auth", authRouter);   //whenever we will hit any route starting with /api/auth then it will be handled by authRouter.     
-app.use("/api/interview", interviewRouter);   //whenever we will hit any route starting with /api/interview then it will be handled by interviewRouter.     
-
-module.exports = app;
+module.exports = app

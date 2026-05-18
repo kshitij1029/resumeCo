@@ -42,7 +42,13 @@ async function registerUserController(req, res) {
         { expiresIn: "1d" }
     );
 
-    res.cookie("token", token);
+    //set token to cookies
+    res.cookie("token",token,{
+        httpOnly:true,
+        secure:true,
+        sameSite:"none",
+        maxAge:24 * 60 * 60 * 1000
+    })
 
     /* status 201 means resource is created successfully */
     res.status(201).json({
@@ -84,7 +90,13 @@ async function LoginUserController(req, res) {
         { expiresIn: "1d" }
     );
 
-    res.cookie("token", token);
+    //set token to cookies
+    res.cookie("token",token,{
+        httpOnly:true,
+        secure:true,
+        sameSite:"none",
+        maxAge:24 * 60 * 60 * 1000
+    })
 
     res.status(200).json({
         message: "User logged in successfully",
