@@ -4,7 +4,7 @@ import toast from 'react-hot-toast'
 //This is an API Layer where we write the code for connecting the backend APIs with the frontend.
 
 const api = axios.create({                 //Axios instance is created to set the default configuration for all the API calls related to authentication. This way we don't have to repeat the baseURL and withCredentials in every API call.
-    baseURL:"http://localhost:3000",
+    baseURL: import.meta.env.BACKEND_URL,
     withCredentials:true
 })
 
