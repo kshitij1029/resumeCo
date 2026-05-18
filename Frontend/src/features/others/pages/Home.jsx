@@ -54,39 +54,27 @@ const row2Testimonials = [
 export default function Home() {
   const navigate = useNavigate();
   const [isVisible, setIsVisible] = useState(false);
-  const { user } = useAuth(); // Destructuring user from your global auth context
+  const { user } = useAuth(); 
 
-  // This local state will control your conditional Navbar styling/rendering
   const [isLoggedIn, setIsLoggedIn] = useState(false); 
 
   useEffect(() => {
     setIsVisible(true);
     
-    // If the user object exists from useAuth, set local isLoggedIn state to true
     if (user) {
       setIsLoggedIn(true);
     } else {
       setIsLoggedIn(false);
     }
-  }, [user]); // Added [user] as a dependency so it updates instantly when a user logs in or out
+  }, [user]); 
 
   const handleGetStarted = () => {
-    // Now using the updated isLoggedIn state directly for clean routing consistency
     if (isLoggedIn) {
       navigate('/generate');
     } else {
       navigate('/Login', { state: { from: '/generate' } });
     }
   };
-
-  // // Handler for dynamic redirection based on Auth State
-  // const handleStartClick = () => {
-  //   if (isLoggedIn) {
-  //     navigate('/generate'); // Redirects straight to generate page if logged in
-  //   } else {
-  //     navigate('/login'); // Redirects to login page if not logged in
-  //   }
-  // };
 
   const handleScroll = (e, id) => {
     e.preventDefault();
@@ -138,12 +126,10 @@ export default function Home() {
           <a href="#testimonials" onClick={(e) => handleScroll(e, 'testimonials')}>Testimonials</a>
         </div>
         <div className="nav-actions">
-          
-          {/* Conditional Rendering based on Authentication State */}
           {!isLoggedIn ? (
             <>
-              {/* Only shown when NOT logged in */}
-              <button className="btn-secondary" onClick={handleGetStarted}>
+              {/* Added hide-on-mobile utility class */}
+              <button className="btn-secondary hide-on-mobile" onClick={handleGetStarted}>
                 Get started
               </button>
               <button className="btn-outline" onClick={() => navigate("/Login")}>
@@ -151,10 +137,8 @@ export default function Home() {
               </button>
             </>
           ) : (
-            /* Only shown when logged in */
             <div className="profile-container" style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
               <div className="profile-icon">
-                {/* Extracts the first letter of the username */}
                 {user?.username ? user.username.charAt(0) : 'U'}
               </div>
               <span className="profile-username" style={{ fontWeight: '500', color: '#8d9cb0' }}>
@@ -165,7 +149,7 @@ export default function Home() {
         </div>
       </nav>
 
-      {/* Hero Section (Page 2) */}
+      {/* Hero Section */}
       <header className="hero-section" id="home">
         <div className="user-count-badge">
           <div className="avatar-group">
@@ -179,7 +163,6 @@ export default function Home() {
         <p className="hero-subtitle">Create, edit and download professional resumes with AI-powered assistance.</p>
         
         <div className="hero-cta-group">
-          {/* Linked to Auth logic handler */}
           <button className="btn-primary-green" onClick={handleGetStarted}>Generate Report →</button>
         </div>
 
@@ -195,7 +178,7 @@ export default function Home() {
         </div>
       </header>
 
-      {/* Features Section (Page 3) */}
+      {/* Features Section */}
       <section className="features-section" id="features">
         <span className="section-tag">⚡ Simple Process</span>
         <h2>Build your resume</h2>
@@ -241,7 +224,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Testimonials Section (Page 4) */}
+      {/* Testimonials Section */}
       <section className="testimonials-section" id="testimonials">
         <span className="section-tag">📑 Testimonials</span>
         <h2>Don't just take our words</h2>

@@ -503,3 +503,567 @@ $severity-low: #3fb950;
         }
     }
 }
+
+
+
+
+
+
+/* ==========================================================================
+   RESPONSIVE OVERRIDES FOR INTERVIEW PAGE (APPEND TO THE BOTTOM OF FILE)
+   ========================================================================== */
+
+.interview-page1 {
+  width: 100%;
+  overflow-x: hidden; // Blocks horizontal layout bleeding
+  box-sizing: border-box;
+
+  // Protect brand logo alignment on all devices
+  .home2-nav-btn {
+    background: none;
+    border: none;
+    padding: 30px 54px;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+
+    .logo {
+      font-size: 1.3rem;
+      font-weight: 700;
+      white-space: nowrap; // Prevents "CO." from slipping onto a second line
+      display: flex;
+      align-items: center;
+    }
+  }
+}
+
+// Media Query for Tablets and Smaller Laptops
+@media (max-width: 1100px) {
+  .interview-layout {
+    display: flex;
+    flex-direction: column; // Flattens side-by-side split layout into a single vertical stack
+    padding: 0 20px;
+    gap: 25px;
+  }
+
+  // Hide desktop vertical line dividers cleanly
+  .interview-divider {
+    display: none !important;
+  }
+
+  // Turn Left Navigation into an horizontal scrolling track
+  .interview-nav {
+    width: 100% !important;
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    padding: 10px 0;
+    background: transparent;
+
+    .nav-content {
+      display: flex !important;
+      flex-direction: row !important; // Align sections side-by-side
+      overflow-x: auto; // Swipes horizontally if titles overflow small screens
+      scrollbar-width: none; // Hides chunky default scroll tracks on Firefox
+      gap: 12px;
+      padding-bottom: 5px;
+
+      &::-webkit-scrollbar {
+        display: none; // Hides chunky default scroll tracks on Chrome/Safari
+      }
+    }
+
+    .interview-nav__label {
+      display: none !important; // Hide the "Sections" label text on mobile rows
+    }
+
+    .interview-nav__item {
+      white-space: nowrap; // Keeps button item titles from wrapping multi-line
+      flex-shrink: 0;
+    }
+
+    .primary-button {
+      margin-top: 15px;
+      width: 100%;
+      justify-content: center;
+    }
+  }
+
+  .interview-content {
+    width: 100% !important;
+    order: 3; 
+    padding: 0 !important;
+    margin-bottom: 24px !important;
+  }
+
+  // Shifting Sidebar below main content
+  .interview-sidebar {
+    width: 100% !important;
+    padding: 0 !important;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); // Wraps gaps / analytics beautifully
+    gap: 20px;
+    align-items: start;
+
+    .sidebar-divider {
+      display: none !important;
+    }
+  }
+}
+
+// Media Query for Mobile Handsets
+@media (max-width: 768px) {
+  .align1 {
+    padding: 0 12px !important;
+  }
+
+  .content-header {
+    flex-direction: column; // Stacks section title and item counts vertically
+    align-items: flex-start;
+    gap: 6px;
+    margin-bottom: 16px;
+
+    h2 {
+      font-size: 1.4rem;
+    }
+  }
+
+  // Accordion Question Card Enhancements
+  .q-card {
+    &__header {
+      padding: 14px;
+      gap: 10px;
+      align-items: flex-start; // Keeps indices level with wrapping text blocks
+    }
+
+    &__question {
+      font-size: 0.95rem;
+      line-height: 1.4;
+    }
+
+    &__body {
+      padding: 14px;
+      gap: 14px;
+    }
+
+    &__section {
+      p {
+        font-size: 0.9rem;
+      }
+    }
+  }
+
+  // Roadmap Phase Component Layout Updates
+  .roadmap-day {
+    padding: 16px;
+    
+    &__header {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 8px;
+    }
+
+    &__focus {
+      font-size: 1.1rem;
+    }
+
+    &__tasks li {
+      font-size: 0.9rem;
+      line-height: 1.4;
+    }
+  }
+
+  // Skill tags wrap protection
+  .skill-gaps {
+    width: 100%;
+    
+    &__list {
+      gap: 8px;
+    }
+
+    .skill-tag {
+      font-size: 0.8rem;
+      padding: 6px 12px;
+    }
+  }
+
+  // Secondary Bottom Branding Layout Adjustments
+  .page-footer1 {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 12px 20px;
+    padding: 30px 16px;
+    text-align: center;
+
+    a {
+      font-size: 0.85rem;
+    }
+  }
+}
+
+// Legacy compact displays modifier safeguard
+@media (max-width: 360px) {
+  .q-card__header {
+    flex-wrap: wrap;
+    
+    .q-card__chevron {
+      margin-left: auto; // Keeps structural interactive triggers floating accurately
+    }
+  }
+}
+
+
+/* ==========================================================================
+   RESPONSIVE OVERRIDES FOR INTERVIEW PAGE (APPEND TO THE BOTTOM OF FILE)
+   ========================================================================== */
+
+.interview-page1 {
+    padding-bottom: 40px !important;
+    // Overriding the brand layout section exclusively on mobile viewports
+    .home2-nav-btn {
+      background: none;
+      border: none;
+      display: inline-flex !important; // Forces the wrapper button layout to size dynamically
+      align-items: center;
+      cursor: pointer;
+      
+      // Spacing adjustments: Adding uniform space above and below the logo
+      padding-top: 35px !important;    
+      padding-bottom: 28px !important;  
+      padding-left: 54px;              // Matches your grid boundary padding
+      width: max-content !important;   // Prevents the block button from stretching full-width and breaking alignment
+
+      .logo {
+        font-size: 24px;
+        font-weight: 800;
+        display: inline-flex !important; // Locks items side-by-side on a microscopic level
+        align-items: center;
+        white-space: nowrap !important;  // ABSOLUTE GUARD: Under no circumstances allows "CO." to split or wrap out of frame
+        font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+        .dot {
+          display: inline-block !important;
+        }
+      }
+    }
+  }
+// ── KEYFRAMES FOR THE SMOOTH DOWN-TRANSITION ANIMATION ──
+@keyframes slideDownFade {
+  from {
+    opacity: 0;
+    transform: translateY(-15px); // Starts slightly higher up
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);    // Settles smoothly into place
+  }
+}
+
+// Media Query for Mobile and Tablet Responsive Views
+@media (max-width: 1100px) {
+
+    .logo{
+        font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+        font-size: 1.3rem;
+        padding:0;
+    }
+  
+  .interview-layout {
+    display: flex;
+    flex-direction: column; // Change layout to a single vertical column
+    padding: 0 20px;
+    gap: 20px;
+  }
+
+  // Hide the desktop divider lines completely on mobile
+  .interview-divider, .sidebar-divider {
+    display: none !important;
+  }
+
+  // 1. TOP ELEMENT: Nav Tabs (Technical, Behavioral, Roadmap)
+  .interview-nav {
+    width: 100% !important;
+    order: 1; // Keeps navigation tabs at the top
+    padding: 10px 0;
+    background: transparent;
+
+    .nav-content {
+      display: flex !important;
+      flex-direction: column !important; // CRITICAL: Changes horizontal scrollbar layout to a true vertical column format
+      width: 100%;
+      gap: 10px; // Gives comfortable margins between individual navigation buttons
+      overflow-x: visible; // Eliminates unwanted clipped edges
+    }
+
+    .interview-nav__label {
+      display: block !important; // Optional: Keeps "Sections" subheader active if you design it to sit cleanly above rows
+      margin-bottom: 8px;
+    }
+
+    .interview-nav__item {
+      display: flex;
+      align-items: center;
+      width: 100%; // Spans across the entire layout container row block
+      padding: 12px 16px; // Generates clean touch targeting real estate for tabs
+      white-space: normal; // Allows text wrapper fallback parsing gracefully if text scales big
+      text-align: left;
+      justify-content: flex-start;
+      gap: 12px; // Balances clean space between the inline SVG icon and your label text
+    }
+
+    // Secondary Separate Download File Action Link Button
+    .primary-button {
+      margin-top: 15px;
+      width: 100%;
+      justify-content: center;
+    }
+  }
+
+  // 2. MIDDLE ELEMENT: Match Score Section & Skill Gaps
+  .interview-sidebar {
+    width: 100% !important;
+    order: 2; // Forces the match score dashboard to sit directly BELOW the navigation row
+    padding: 0 !important;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); 
+    gap: 20px;
+    align-items: start;
+    margin-bottom: 10px;
+  }
+
+  // 3. BOTTOM ELEMENT: Dynamic Content (The Active Section Container)
+  .interview-content {
+    width: 100% !important;
+    order: 3; // Places the main question lists or roadmap levels at the BOTTOM
+    padding: 0 !important;
+
+    // Smooth down-transition animation applied directly to the active mounting section wrapper
+    section {
+      animation: slideDownFade 0.45s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+      will-change: transform, opacity;
+    }
+  }
+}
+
+// Media Query for Small Handsets
+@media (max-width: 768px) {
+
+  .align1 {
+    padding: 0 12px !important;
+  }
+
+  .content-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 4px;
+    margin-bottom: 16px;
+
+    h2 {
+      font-size: 1.3rem;
+    }
+  }
+
+  .q-card {
+    &__header {
+      padding: 14px;
+      gap: 10px;
+      align-items: flex-start;
+    }
+
+    &__question {
+      font-size: 0.95rem;
+    }
+
+    &__body {
+      padding: 14px;
+    }
+  }
+
+  .roadmap-day {
+    padding: 16px;
+    
+    &__header {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 6px;
+    }
+  }
+
+  .page-footer1 {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 12px 20px;
+    padding: 30px 16px;
+
+    a {
+      font-size: 0.85rem;
+    }
+  }
+}
+
+@media (max-width: 1100px) {
+  
+  // ... keep your interview-layout and other overrides the same ...
+
+  .interview-page1 {
+    // 1. Force the root page container to structural full alignment
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start; // Ensures child elements align to the absolute left
+
+    .home2-nav-btn {
+      background: none;
+      border: none;
+      display: inline-flex !important;
+      align-items: center;
+      cursor: pointer;
+      
+      // Symmetrical layout alignment spacing matching picture #2
+      padding-top: 20px !important;    
+      padding-bottom: 20px !important;  
+      padding-left: 16px !important; // Adjusts left padding to align perfectly with screen edges
+      padding-right: 16px !important;
+      
+      // Resets sizing frameworks to eliminate layout pushing shifts
+      width: auto !important; 
+      max-width: max-content !important;
+      margin-left: 0 !important; // Keeps any rogue center-align properties from pulling it right
+
+      .logo {
+        font-size: 1.3rem; // Matches the precise text size from picture #2
+        font-weight: 700;
+        display: inline-flex !important;
+        align-items: center;
+        white-space: nowrap !important;
+        text-align: left;
+        
+        .dot {
+          display: inline-block !important;
+        }
+      }
+    }
+  }
+
+  // ... keep your interview-nav, content, and sidebar blocks exactly the same ...
+}
+
+
+@media (max-width: 1100px) {
+
+  // ... keep your top navigation tab configurations and sidebar grids exactly the same ...
+
+  // 1. Core Timeline Container Track
+  .roadmap-list {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 48px !important; // Ample breathing room between consecutive levels
+    padding-left: 36px !important; // Leaves perfect structural space on the left for the vertical line
+    position: relative !important;
+    width: 100% !important;
+    box-sizing: border-box;
+
+    // The Main Vertical Line (Passing cleanly behind the hollow node circles)
+    &::before {
+      content: "" !important;
+      position: absolute !important;
+      left: 12px !important; // Precise anchor point for matching the center of your timeline nodes
+      top: 10px !important;
+      bottom: 10px !important;
+      width: 2px !important;
+      background-color: #ef3d7b !important; // Neon pink accent line
+      z-index: 1 !important;
+    }
+  }
+
+  // 2. Individual Level/Phase Item Block
+  .roadmap-day {
+    position: relative !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    width: 100% !important;
+    padding: 0 !important; 
+    box-sizing: border-box;
+
+    // Disables any previous overlapping pseudo elements from desktop
+    &::before, .timeline-bar {
+      display: none !important;
+    }
+
+    // 3. NEW: Injecting the Hollow Timeline Node Circle over the main track line
+    &::after {
+      content: "" !important;
+      position: absolute !important;
+      left: -31px !important; // Offsets backward to center geometric axis precisely on the line
+      top: 4px !important;   // Vertically aligns the circle evenly with your top text badge
+      width: 14px !important; // Match your desktop layout circle dimensions
+      height: 14px !important;
+      border: 2px solid #ef3d7b !important; // Your pink boundary color
+      background-color: #1a1f27 !important; // Match your dark background profile color for a hollow effect
+      border-radius: 50% !important;
+      z-index: 2 !important;
+    }
+
+    // 4. Header wrapper layout flow setup
+    &__header {
+      display: flex !important;
+      flex-direction: column !important; // Stacks elements vertically: Badge first, Heading second
+      align-items: flex-start !important;
+      width: 100% !important;
+      margin-bottom: 16px !important;
+      gap: 8px !important; // Creates clean vertical margin space between Level badge and Header text
+    }
+
+    // 5. Level Text Badge (Level 1, Level 2, etc.) positioned cleanly on top
+    &__badge {
+      position: relative !important;
+      left: 0 !important; // Snaps text back to primary horizontal layout boundaries
+      top: 0 !important;
+      margin: 0 !important;
+      display: inline-block !important;
+      text-align: left !important;
+      transform: none !important; // Removes your previous shifting overrides
+      z-index: 3 !important;
+      font-size: 0.85rem !important;
+      font-weight: 600 !important;
+    }
+
+    // 6. Section Main Heading text
+    &__focus {
+      font-size: 1.35rem !important;
+      font-weight: 700 !important;
+      line-height: 1.3 !important;
+      margin: 0 !important;
+      text-align: left !important;
+      width: 100% !important;
+      word-wrap: break-word !important;
+    }
+
+    // 7. Sub-task layout descriptions setup
+    &__tasks {
+      width: 100% !important;
+      display: flex !important;
+      flex-direction: column !important;
+      gap: 14px !important;
+      padding-left: 0 !important;
+      margin: 0 !important;
+      list-style-type: none !important;
+
+      li {
+        display: flex !important;
+        align-items: flex-start !important;
+        gap: 10px !important;
+        font-size: 0.95rem !important;
+        line-height: 1.5 !important;
+        text-align: left !important;
+        width: 100% !important;
+        
+        .roadmap-day__bullet {
+          margin-top: 6px !important; 
+          flex-shrink: 0 !important;
+        }
+      }
+    }
+  }
+}

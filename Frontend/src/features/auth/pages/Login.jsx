@@ -5,6 +5,8 @@ import { useAuth } from '../hooks/useAuth.js'
 import toast from 'react-hot-toast'
 import { Home } from 'lucide-react' // Import Home icon
 import Loading from '../../others/components/Loading.jsx'
+// Import your background component (adjust the path to match your project structure)
+import AnimatedBackground from '../../others/components/AnimatedBackground.jsx' 
 
 const Login = () => {
     const { loading, handleLogin } = useAuth()
@@ -30,15 +32,30 @@ const Login = () => {
 
     return (
         <div className="auth-wrapper">
+            {/* 1. Place the background component as the first child */}
+            <AnimatedBackground />
+
             {/* New Styled Home Button */}
             {/* 1. First Child = Left Anchor: Home Button */}
-                <button 
-                    onClick={() => navigate("/")} 
-                    className="home2-nav-btn"
-                    aria-label="Go to Home"
-                >
-                    <div className="logo">resume<span className="dot">CO.</span></div>
-                </button>
+            <button 
+                onClick={() => navigate("/")} 
+                className="home2-nav-btn"
+                aria-label="Go to Home"
+                style={{ 
+                    position: 'absolute', 
+                    top: '5px', 
+                    left: '15px', 
+                    zIndex: 2,
+                    background: 'none',
+                    border: 'none',
+                    cursor: 'pointer'
+                }}
+            >
+                {/* Added whiteSpace: "nowrap" and display styling to prevent clipping/wrapping on mobile */}
+                <div className="logo" style={{ display: 'inline-flex', alignItems: 'center', whiteSpace: 'nowrap' }}>
+                    resume<span className="dot" style={{ display: 'inline' }}>CO.</span>
+                </div>
+            </button>
 
             <main className="auth-main">
                 <div className="form-container">

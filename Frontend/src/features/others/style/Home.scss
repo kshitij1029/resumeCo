@@ -1091,3 +1091,262 @@ $primary-pink: #ff2a75;
     }
   }
 }
+
+
+
+/* ==========================================================================
+   RESPONSIVE DESIGN SYSTEM (DO NOT OVERWRITE EXISTING RULES, APPEND TO BOTTOM)
+   ========================================================================== */
+
+// Base container safeguard
+.landing-container {
+  width: 100%;
+  overflow-x: hidden; // Prevents horizontal layout breaking/scrolling
+  box-sizing: border-box;
+}
+
+// Media Query for Tablets & Small Desktops
+@media (max-width: 1024px) {
+  .hero-section {
+    padding: 60px 20px;
+    
+    h1 {
+      font-size: 2.8rem; // Scale header safely down from desktop sizes
+    }
+  }
+
+  .features-grid {
+    grid-template-columns: 1fr; // Changes 2-column desk grid to vertical stack
+    gap: 40px;
+  }
+
+  .footer-top {
+    flex-direction: column;
+    gap: 40px;
+  }
+}
+
+// Media Query for Mobile Devices
+@media (max-width: 768px) {
+  
+  // 1. Navbar Adjustments
+  .navbar {
+    padding: 15px 20px; // Sets symmetrical 20px padding on left and right edges
+    display: grid !important; 
+    grid-template-columns: auto auto; 
+    row-gap: 20px;
+    justify-content: space-between;
+    align-items: center; // Vertically aligns resumeCO. and the profile icon on the same line
+
+    .logo {
+      grid-row: 1;
+      grid-column: 1;
+      display: flex;
+      align-items: center;
+    }
+    
+    .nav-actions {
+      grid-row: 1;
+      grid-column: 2;
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+
+      // Targets your profile container structure
+      .profile-container {
+        display: flex !important;
+        flex-direction: column !important; // Stacks name under the icon
+        align-items: center !important;    // Centers them horizontally relative to each other
+        gap: 4px !important;               // Keeps a tight, clean spacing between icon and name
+        text-align: center;
+        
+        // Ensures the circle icon doesn't shift
+        .profile-icon {
+          margin: 0 auto;
+        }
+
+        // Adjusts the username layout for mobile tracking
+        .profile-username {
+          font-size: 0.85rem;
+          white-space: nowrap; // Prevents the name from breaking weirdly into two lines
+        }
+      }
+    }
+
+    .nav-links {
+      grid-row: 2;
+      grid-column: 1 / span 2; // Drops down and stretches fully underneath
+      display: flex; 
+      gap: 25px;
+      width: 100%;
+      justify-content: center;
+      padding-top: 10px;
+      border-top: 1px solid rgba(255, 255, 255, 0.05);
+    }
+  }
+
+  // 2. Hero Section Mobile Optimization
+  .hero-section {
+    padding: 40px 16px;
+    text-align: center;
+
+    h1 {
+      font-size: 2.2rem;
+      line-height: 1.2;
+      br {
+        display: none; // Unbreaks structural layout line breaks for smooth mobile text-wrapping
+      }
+    }
+
+    .hero-subtitle {
+      font-size: 1rem;
+      padding: 0 10px;
+    }
+
+    .brand-logos {
+      display: flex;
+      flex-wrap: wrap; // Safely loops corporate badges down onto multiple rows instead of clipping
+      justify-content: center;
+      gap: 15px 25px;
+      margin-top: 20px;
+      
+      span {
+        font-size: 0.9rem;
+      }
+    }
+  }
+
+  // 3. Features Section Responsive Changes
+  .features-section {
+    padding: 50px 16px;
+
+    h2 {
+      font-size: 2rem;
+    }
+
+    .features-grid {
+      grid-template-columns: 1fr; // True stacked linear flow
+      gap: 30px;
+    }
+
+    .neon-portal-container {
+      width: 100%;
+      max-width: 100%;
+      
+      img {
+        width: 100%;
+        height: auto; // Keeps structural image proportions intact
+        max-height: 300px;
+        object-fit: contain;
+      }
+    }
+
+    .feature-item {
+      flex-direction: column; // Text shifts below modern system icons on cramped viewpoints
+      text-align: center;
+      padding: 20px;
+      gap: 12px;
+    }
+  }
+
+  // 4. Testimonials Section Adjustments
+  .testimonials-section {
+    padding: 40px 0; // Padding tweak so marquee tracks look boundaryless
+
+    h2 {
+      font-size: 2rem;
+      padding: 0 16px;
+    }
+
+    .section-subtitle {
+      padding: 0 16px;
+    }
+
+    .testimonial-card {
+      width: 280px; // Compact scaling for horizontal scroll consistency
+      padding: 16px;
+    }
+  }
+
+  // 5. Footer Layout Stack Optimization
+  .landing-footer {
+    padding: 40px 20px 20px 20px;
+
+    .footer-top {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 35px;
+    }
+
+    .footer-brand-col {
+      width: 100%;
+    }
+
+    .footer-links-grid {
+      width: 100%;
+      grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); // Automatically turns 3 columns into 2 rows cleanly
+      gap: 25px;
+    }
+
+    .footer-bottom {
+      flex-direction: column;
+      gap: 15px;
+      text-align: center;
+      align-items: center;
+
+      .footer-legal-links {
+        justify-content: center;
+        flex-wrap: wrap;
+        gap: 10px 15px;
+      }
+    }
+  }
+}
+
+// Media Query for Ultra-Small Screen Sizes (Screen width < 360px)
+@media (max-width: 360px) {
+  .navbar {
+    .logo {
+      font-size: 1.1rem;
+    }
+    .btn-secondary, .btn-outline {
+      padding: 6px 12px;
+      font-size: 0.8rem;
+    }
+  }
+  
+  .hero-section h1 {
+    font-size: 1.8rem;
+  }
+}
+
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  box-sizing: border-box;
+  
+  /* SOLUTION 1: Add safe padding inside your navbar container so contents never hit the screen edge */
+  padding: 1rem 2rem; 
+
+  @media (max-width: 768px) {
+    padding: 1rem 1.25rem; /* Slightly tighter on mobile to maximize real estate */
+  }
+}
+
+.nav-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  /* Ensures buttons wrap or clamp naturally inside flex alignment box */
+  flex-shrink: 0; 
+}
+
+/* SOLUTION 2: Hide Get Started completely on smaller viewports & shift Login cleanly */
+@media (max-width: 640px) {
+  .hide-on-mobile {
+    display: none !important;
+  }
+}

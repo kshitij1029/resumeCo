@@ -88,10 +88,11 @@ $primary-pink: #ff2a75;
         background: transparent;
         border:none;
         color: $text-main;
-        padding: 0.6rem 1.2rem;
+        padding: 0rem 1.2rem;
         border-radius: 10px;
         cursor: pointer;
         transition: $transition;
+        font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
 
 
         @media (max-width: 768px) {
@@ -167,7 +168,6 @@ $primary-pink: #ff2a75;
     flex: 1;
     display: flex;
     flex-direction: column;
-    gap: 1rem;
     padding: 1.5rem;
     position: relative;
 
@@ -210,6 +210,8 @@ $primary-pink: #ff2a75;
         // so lines of text wrap naturally BEFORE hitting the counter zone
         margin-bottom: 0.5rem; 
         padding-bottom: 2rem !important;
+         margin-top: 1rem;
+        margin-bottom: 1rem;
 
         &::placeholder {
             color: $text-muted;
@@ -665,7 +667,7 @@ $primary-pink: #ff2a75;
     flex-direction: column;
     align-items: center;
     justify-content: flex-start; // Keeps content flow top-down naturally
-    padding: 6.5rem 1.5rem 3rem 1.5rem; /* Leaves clear breathing space below top navbar triggers */
+    padding: 6rem 1.5rem 3rem 1.5rem; /* Leaves clear breathing space below top navbar triggers */
     gap: 2.5rem;
     position: relative; 
 
@@ -742,4 +744,214 @@ $primary-pink: #ff2a75;
     .dot {
       color: $primary-pink;
     }
+}
+
+
+/* ==========================================================================
+   RESPONSIVE OVERRIDES FOR GENERATE PAGE (APPEND TO THE BOTTOM OF FILE)
+   ========================================================================== */
+
+.home-page {
+  width: 100%;
+  overflow-x: hidden; // Prevents unwanted horizontal layout shifting
+  box-sizing: border-box;
+}
+
+// Media Query for Tablets and Smaller Screens
+@media (max-width: 1024px) {
+  .top-nav-bar {
+    padding: 15px 24px;
+  }
+
+  .page-header {
+    margin-top: 20px;
+    padding: 0 24px;
+    
+    h1 {
+      font-size: 2.2rem;
+    }
+  }
+
+  .interview-card {
+    margin: 20px 24px;
+    
+    &__body {
+      flex-direction: column; // Switches the side-by-side split screen to a stacked view
+      gap: 0;
+    }
+  }
+
+  .panel-divider {
+    width: 100% !important;
+    height: 1px !important; // Turns the vertical line into a clean horizontal divider
+    margin: 24px 0 !important;
+    background: rgba(255, 255, 255, 0.08); // Fallback styling consistency
+  }
+}
+
+// Media Query for Mobile Handsets
+@media (max-width: 768px) {
+  .top-nav-bar {
+    padding: 12px 16px;
+    
+    .home2-nav-btn {
+      background: none;
+      border: none;
+      padding: 0;
+      text-align: left;
+      display: flex;
+      align-items: center;
+      max-width: 60%; // Keeps the container from getting squeezed out by the history button
+
+      .logo {
+        font-size: 1.3rem; // Keeps font balance crisp on tight screens
+        font-weight: 700;
+        white-space: nowrap; // CRITICAL: Crucial flag that prevents "CO." from breaking onto a hidden line
+        display: flex;
+        align-items: center;
+
+        .dot {
+          display: inline-block; // Guarantees the dot container follows font mechanics perfectly
+        }
+      }
+    }
+
+    .home1-nav-btn {
+      padding: 6px 12px;
+      font-size: 0.9rem;
+      
+      span {
+        display: inline-block; // Soft fallback placeholder tracking
+      }
+    }
+  }
+
+  .page-header {
+    text-align: center;
+    margin-top: 15px;
+    padding: 0 16px;
+
+    h1 {
+      font-size: 1.8rem;
+      line-height: 1.3;
+    }
+
+    p {
+      font-size: 0.95rem;
+    }
+  }
+
+  .interview-card {
+    margin: 15px 16px;
+    border-radius: 12px;
+
+    &__body {
+      padding: 20px;
+    }
+
+    .panel {
+      width: 100%;
+
+      &__header {
+        margin-bottom: 12px;
+
+        h2 {
+          font-size: 1.1rem;
+        }
+      }
+
+      &__textarea {
+        min-height: 160px; // Gives plenty of input space for scrolling or pasting text
+        font-size: 0.9rem;
+        padding: 12px;
+      }
+    }
+
+    // Adjusting input field sizing properties safely
+    .dropzone {
+      padding: 24px 16px;
+      
+      &__title {
+        font-size: 0.95rem;
+        text-align: center;
+      }
+      
+      &__subtitle {
+        font-size: 0.8rem;
+        text-align: center;
+      }
+    }
+
+    &__footer {
+      flex-direction: column-reverse; // Stacks button *above* the metadata on mobile view
+      gap: 16px;
+      padding: 20px;
+      align-items: center;
+      text-align: center;
+
+      .footer-info {
+        font-size: 0.8rem;
+      }
+
+      .generate-btn {
+        width: 100%; // Spans full card frame width for easier touch tapping targets
+        justify-content: center;
+        padding: 14px 20px;
+        font-size: 1rem;
+      }
+    }
+  }
+
+  // Sliding Drawer Mobile Optimization
+  .recent-reports-drawer {
+    width: 100% !important; // Takes over the full display edge for clean tracking readability
+    max-width: 100%;
+    right: -100%; // Hides away safely based on original architecture flow
+    
+    &.open {
+      right: 0;
+    }
+
+    .drawer-header {
+      padding: 16px;
+      
+      h2 {
+        font-size: 1.2rem;
+      }
+    }
+
+    .reports-list {
+      padding: 16px;
+      
+      .report-item {
+        padding: 14px;
+        
+        h3 {
+          font-size: 1rem;
+        }
+      }
+    }
+  }
+
+  .page-footer {
+    flex-wrap: wrap; // Safely flows legally-required navigation inline tags
+    justify-content: center;
+    gap: 12px 20px;
+    padding: 24px 16px;
+    
+    a {
+      font-size: 0.85rem;
+    }
+  }
+}
+
+// Media Query for legacy ultra-small mobile screen frameworks
+@media (max-width: 360px) {
+  .interview-card__body {
+    padding: 16px;
+  }
+  
+  .top-nav-bar .home1-nav-btn span {
+    display: none; // Hides text element "History", leaving icon only for tight pixel widths
+  }
 }

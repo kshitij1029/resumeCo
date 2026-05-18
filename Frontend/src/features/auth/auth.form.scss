@@ -134,3 +134,39 @@ $transition: all 0.3s ease;
     &:hover { text-decoration: underline; }
   }
 }
+
+
+.auth-wrapper {
+  position: relative;
+  min-height: 100vh;
+  width: 100%;
+  overflow-x: hidden;
+  
+  // Ensures the wrapper acts as a stacking context layout
+  display: flex;
+  flex-direction: column; 
+}
+
+/* 
+  If your <AnimatedBackground /> component doesn't already have structural styles, 
+  ensure it targets the container element of your animation:
+*/
+.animated-bg-container { // Replace with the actual class/ID used inside your AnimatedBackground component
+  position: fixed; // Fixed ensures it covers the full screen even if you scroll
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 0; // Sits at the bottom layer
+  pointer-events: none; // Crucial: Allows clicks to pass through to your inputs and buttons
+}
+
+/* 
+  Ensure your form elements and home navigation sit safely ABOVE the background layer
+*/
+.home2-nav-btn,
+.auth-main {
+  position: relative; 
+  z-index: 1; // Sits above the background layer (z-index: 0)
+}
+
