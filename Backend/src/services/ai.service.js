@@ -55,46 +55,32 @@ async function generateInterviewReport({resume, selfDescription, jobDescription}
     return JSON.parse(response.text);
 }
 
+// Inside src/services/ai.service.js
 async function generatePdfFromHtml(htmlContent) {
-    // 🛠️ Add production configuration arguments
     const browser = await puppeteer.launch({
-        headless: true, // Run without opening a visible browser window
+        headless: true,
         args: [
-            '--no-sandbox',                // Crucial for running in restricted cloud containers
-            '--disable-setuid-sandbox',     // Disables security sandbox components that block execution
-            '--disable-dev-shm-usage',     // Forces Puppeteer to use disk instead of memory allocation limit
+            '--no-sandbox',
+            '--disable-setuid-sandbox',
+            '--disable-dev-shm-usage',
             '--disable-extensions'
-        ],
-        // Dynamically locate the Chrome installation binary inside Render's Linux environment
-        executablePath: process.env.NODE_ENV === 'production' 
-            ? '/usr/bin/google-chrome' 
-            : undefined
+        ]
+        // ❌ REMOVE executablePath completely! 
+        // Leaving it out allows Puppeteer to automatically find the local browser we downloaded in Step 1.
     });
 
     try {
         const page = await browser.newPage();
-        
-        // Setting the content
         await page.setContent(htmlContent, { waitUntil: "networkidle0" });
 
         const pdfBuffer = await page.pdf({
-            format: "A4", 
-            margin: {
-                top: "5mm",
-                bottom: "5mm",
-                left: "5mm",
-                right: "5mm"
-            },
-            printBackground: true // 💡 Add this to preserve CSS background colors/styles in the PDF!
+            format: "A4",
+            margin: { top: "5mm", bottom: "5mm", left: "5mm", right: "5mm" },
+            printBackground: true
         });
 
         return pdfBuffer;
-
-    } catch (error) {
-        console.error("Puppeteer processing error:", error);
-        throw error; // Propagate the error so your main route controller can handle the status fallback
     } finally {
-        // 🔒 Always close the browser instance to prevent memory leaks on your server!
         await browser.close();
     }
 }
