@@ -72,7 +72,7 @@ export default function Home() {
     if (isLoggedIn) {
       navigate('/generate');
     } else {
-      navigate('/Login', { state: { from: '/generate' } });
+      navigate('/login', { state: { from: '/generate' } });
     }
   };
 
@@ -132,7 +132,7 @@ export default function Home() {
               <button className="btn-secondary hide-on-mobile" onClick={handleGetStarted}>
                 Get started
               </button>
-              <button className="btn-outline" onClick={() => navigate("/Login")}>
+              <button className="btn-outline" onClick={() => navigate("/login")}>
                 Login
               </button>
             </>

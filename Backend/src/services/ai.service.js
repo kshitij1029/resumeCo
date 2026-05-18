@@ -56,22 +56,47 @@ async function generateInterviewReport({resume, selfDescription, jobDescription}
 }
 
 async function generatePdfFromHtml(htmlContent) {
-    const browser = await puppeteer.launch()
-    const page = await browser.newPage();
-    await page.setContent(htmlContent, { waitUntil: "networkidle0" })
+    // 🛠️ Add production configuration arguments
+    const browser = await puppeteer.launch({
+        headless: true, // Run without opening a visible browser window
+        args: [
+            '--no-sandbox',                // Crucial for running in restricted cloud containers
+            '--disable-setuid-sandbox',     // Disables security sandbox components that block execution
+            '--disable-dev-shm-usage',     // Forces Puppeteer to use disk instead of memory allocation limit
+            '--disable-extensions'
+        ],
+        // Dynamically locate the Chrome installation binary inside Render's Linux environment
+        executablePath: process.env.NODE_ENV === 'production' 
+            ? '/usr/bin/google-chrome' 
+            : undefined
+    });
 
-    const pdfBuffer = await page.pdf({
-        format: "A4", margin: {
-            top: "5mm",
-            bottom: "5mm",
-            left: "5mm",
-            right: "5mm"
-        }
-    })
+    try {
+        const page = await browser.newPage();
+        
+        // Setting the content
+        await page.setContent(htmlContent, { waitUntil: "networkidle0" });
 
-    await browser.close()
+        const pdfBuffer = await page.pdf({
+            format: "A4", 
+            margin: {
+                top: "5mm",
+                bottom: "5mm",
+                left: "5mm",
+                right: "5mm"
+            },
+            printBackground: true // 💡 Add this to preserve CSS background colors/styles in the PDF!
+        });
 
-    return pdfBuffer
+        return pdfBuffer;
+
+    } catch (error) {
+        console.error("Puppeteer processing error:", error);
+        throw error; // Propagate the error so your main route controller can handle the status fallback
+    } finally {
+        // 🔒 Always close the browser instance to prevent memory leaks on your server!
+        await browser.close();
+    }
 }
 
 // async function generatePdfFromHtml(htmlContent) {
