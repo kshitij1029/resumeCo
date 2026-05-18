@@ -56,33 +56,70 @@ async function generateInterviewReport({resume, selfDescription, jobDescription}
 }
 
 // Inside src/services/ai.service.js
+// async function generatePdfFromHtml(htmlContent) {
+//     const browser = await puppeteer.launch({
+//         headless: true,
+//         args: [
+//             '--no-sandbox',
+//             '--disable-setuid-sandbox',
+//             '--disable-dev-shm-usage',
+//             '--disable-extensions'
+//         ]
+//         // ❌ REMOVE executablePath completely! 
+//         // Leaving it out allows Puppeteer to automatically find the local browser we downloaded in Step 1.
+//     });
+
+//     try {
+//         const page = await browser.newPage();
+//         await page.setContent(htmlContent, { waitUntil: "networkidle0" });
+
+//         const pdfBuffer = await page.pdf({
+//             format: "A4",
+//             margin: { top: "5mm", bottom: "5mm", left: "5mm", right: "5mm" },
+//             printBackground: true
+//         });
+
+//         return pdfBuffer;
+//     } 
+//     catch (error) {
+//         console.log(error)
+//     } finally {
+//         await browser.close();
+//     }
+// }
 async function generatePdfFromHtml(htmlContent) {
     const browser = await puppeteer.launch({
-        headless: true,
+        headless: true, // Must be true in a server environment
         args: [
-            '--no-sandbox',
-            '--disable-setuid-sandbox',
-            '--disable-dev-shm-usage',
-            '--disable-extensions'
-        ]
-        // ❌ REMOVE executablePath completely! 
-        // Leaving it out allows Puppeteer to automatically find the local browser we downloaded in Step 1.
+            "--no-sandbox", 
+            "--disable-setuid-sandbox", 
+            "--disable-dev-shm-usage", // Prevents memory crashes on Render's 512MB RAM
+            "--single-process"         // Keeps resource usage low
+        ],
+        // If you still get "Chrome not found", explicitly set this path:
+        // executablePath: '/usr/bin/google-chrome-stable' 
     });
-
     try {
         const page = await browser.newPage();
-        await page.setContent(htmlContent, { waitUntil: "networkidle0" });
+    await page.setContent(htmlContent, { waitUntil: "networkidle0" })
 
-        const pdfBuffer = await page.pdf({
-            format: "A4",
-            margin: { top: "5mm", bottom: "5mm", left: "5mm", right: "5mm" },
-            printBackground: true
-        });
+    const pdfBuffer = await page.pdf({
+        format: "A4", margin: {
+            top: "5mm",
+            bottom: "5mm",
+            left: "5mm",
+            right: "5mm"
+        }
+    })
 
-        return pdfBuffer;
-    } finally {
-        await browser.close();
+    return pdfBuffer
+    } catch (error) {
+        console.log(error)
     }
+    finally{
+        await browser.close()
+    }
+
 }
 
 // async function generatePdfFromHtml(htmlContent) {
