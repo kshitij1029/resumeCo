@@ -11,12 +11,12 @@ const row1Testimonials = [
   { 
     name: 'Jordan Lee', 
     handle: '@jordantalks', 
-    text: 'The resume builder alone is incredible, but the custom interview preparation plan completely streamlined my entire application process.' 
+    text: 'The automated resume report alone is incredible, but the custom interview preparation plan timeline completely streamlined my entire application process.' 
   },
   { 
     name: 'Avery Johnson', 
     handle: '@averywrites', 
-    text: 'Unbelievable accuracy with the tailored AI resumes. Landed three technical interviews in a week because my profile finally aligned with what recruiters wanted.' 
+    text: 'Unbelievable accuracy with the tailored resume feedback reports. Generating specific interview questions helped my profile align perfectly with what recruiters wanted.' 
   },
   { 
     name: 'Briar Martin', 
@@ -34,17 +34,17 @@ const row2Testimonials = [
   { 
     name: 'Deepak Rawat', 
     handle: '@deepak_rawat', 
-    text: 'The technical questions matched my tier-1 company rounds perfectly. The step-by-step preparation roadmap is structured incredibly well.' 
+    text: 'The technical questions matched my tier-1 company rounds perfectly. The step-by-step preparation roadmap and timeline are structured incredibly well.' 
   },
   { 
     name: 'Sarah Jenkins', 
     handle: '@sarahtech', 
-    text: 'I loved how the action plan broke down complex technical topics into daily, manageable milestones. Took away all my prep anxiety!' 
+    text: 'I loved how the plan timeline broke down complex technical topics into daily, manageable milestones. Took away all my prep anxiety!' 
   },
   { 
     name: 'Kshitij Jha', 
     handle: '@kj_dev', 
-    text: 'Exceptional UI/UX flow. Being able to compare my resume against job descriptions and get an instant severity-coded skill gap analysis is flawless.' 
+    text: 'Exceptional UI/UX flow. Being able to run a resume analysis against job descriptions and get an instant severity-coded skill gap report is flawless.' 
   },
   { 
     name: 'Elena Rostova', 
@@ -179,7 +179,7 @@ export default function Home() {
           <p>⭐⭐⭐⭐⭐ Used by 10,000+ users</p>
         </div>
         <h1>Land your dream job with <br /><span className="highlight-text">AI-powered resumes.</span></h1>
-        <p className="hero-subtitle">Create, edit and download professional resumes with AI-powered assistance.</p>
+        <p className="hero-subtitle">Create and edit a professional resume with AI-powered assistance.</p>
         
         <div className="hero-cta-group">
           <button className="btn-primary-green" onClick={handleGetStarted}>Generate Report →</button>
@@ -201,7 +201,7 @@ export default function Home() {
       <section className="features-section" id="features">
         <span className="section-tag">⚡ Simple Process</span>
         <h2>Build your resume</h2>
-        <p className="section-subtitle" style={{marginBottom: 8}}>Our streamlined process helps you create a professional resume in minutes with intelligent AI-powered tools and features.</p>
+        <p className="section-subtitle" style={{marginBottom: 8}}>Our streamlined process helps you create a professional resume report in minutes with intelligent AI-powered tools and features.</p>
 
         <div className="features-grid">
           <div className="neon-portal-container">
@@ -304,7 +304,7 @@ export default function Home() {
         
         <div className="footer-top">
           <div className="footer-brand-col">
-            <div className="logo">resume<span className="dot">.</span></div>
+            <div className="logo">resume<span className="dot">CO.</span></div>
             <p className="brand-desc">
               Elevating career building with industrial-grade AI architecture. Land your dream technical and creative roles flawlessly.
             </p>
