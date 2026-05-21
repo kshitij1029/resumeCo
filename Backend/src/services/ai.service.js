@@ -1,8 +1,7 @@
 const { GoogleGenAI } = require("@google/genai")
 const { z } = require("zod")
 // const { zodToJsonSchema } = require("zod-to-json-schema")
-import puppeteer from 'puppeteer-core';
-import chromium from '@sparticuz/chromium';
+const puppeteer = require('puppeteer');
 const path = require('path');
 
 const ai = new GoogleGenAI({
@@ -59,24 +58,16 @@ async function generateInterviewReport({resume, selfDescription, jobDescription}
 
 async function generatePdfFromHtml(htmlContent) {
     const browser = await puppeteer.launch({
-        args: chromium.args,
-        defaultViewport: chromium.defaultViewport,
-        executablePath: await chromium.executablePath(),
-        headless: chromium.headless,
-        ignoreHTTPSErrors: true,
+        headless: true, // Must be true in a server environment
+        args: [
+            "--no-sandbox", 
+            "--disable-setuid-sandbox", 
+            "--disable-dev-shm-usage", // Prevents memory crashes on Render's 512MB RAM
+            "--single-process"         // Keeps resource usage low
+        ],
+        // If you still get "Chrome not found", explicitly set this path:
+        // executablePath: '/usr/bin/google-chrome-stable' 
     });
-
-    // browser = await puppeteer.launch({
-    //     headless: true, // Must be true in a server environment
-    //     args: [
-    //         "--no-sandbox", 
-    //         "--disable-setuid-sandbox", 
-    //         "--disable-dev-shm-usage", // Prevents memory crashes on Render's 512MB RAM
-    //         "--single-process"         // Keeps resource usage low
-    //     ],
-    //     // If you still get "Chrome not found", explicitly set this path:
-    //     // executablePath: '/usr/bin/google-chrome-stable' 
-    // });
     try {
         const page = await browser.newPage();
     await page.setContent(htmlContent, { waitUntil: "networkidle0" })
@@ -97,8 +88,9 @@ async function generatePdfFromHtml(htmlContent) {
     finally{
         await browser.close()
     }
-    await browser.close();
+
 }
+
 
 
 async function generateResumePdf({ resume, selfDescription, jobDescription }) {
