@@ -56,89 +56,41 @@ async function generateInterviewReport({resume, selfDescription, jobDescription}
     return JSON.parse(response.text);
 }
 
-// async function generatePdfFromHtml(htmlContent) {
-//     const browser = await puppeteer.launch({
-//         headless: true, // Must be true in a server environment
-//         args: [
-//             "--no-sandbox", 
-//             "--disable-setuid-sandbox", 
-//             "--disable-dev-shm-usage", // Prevents memory crashes on Render's 512MB RAM
-//             "--single-process"         // Keeps resource usage low
-//         ],
-//         // If you still get "Chrome not found", explicitly set this path:
-//         // executablePath: '/usr/bin/google-chrome-stable' 
-//     });
-//     try {
-//         const page = await browser.newPage();
-//     await page.setContent(htmlContent, { waitUntil: "networkidle0" })
-
-//     const pdfBuffer = await page.pdf({
-//         format: "A4", margin: {
-//             top: "5mm",
-//             bottom: "5mm",
-//             left: "5mm",
-//             right: "5mm"
-//         }
-//     })
-
-//     return pdfBuffer
-//     } catch (error) {
-//         console.log(error)
-//     }
-//     finally{
-//         await browser.close()
-//     }
-
-// }
-
 async function generatePdfFromHtml(htmlContent) {
-    let browser;
-    
+    const browser = await puppeteer.launch({
+        headless: true, // Must be true in a server environment
+        args: [
+            "--no-sandbox", 
+            "--disable-setuid-sandbox", 
+            "--disable-dev-shm-usage", // Prevents memory crashes on Render's 512MB RAM
+            "--single-process"         // Keeps resource usage low
+        ],
+        // If you still get "Chrome not found", explicitly set this path:
+        // executablePath: '/usr/bin/google-chrome-stable' 
+    });
     try {
-        console.log("Launching Puppeteer on Render...");
-
-        browser = await puppeteer.launch({
-            headless: true,
-            // Ekdum clean settings: Jab cache dir configured ho, toh Puppeteer khud binary dhoond leta hai
-            args: [
-                "--no-sandbox",
-                "--disable-setuid-sandbox",
-                "--disable-dev-shm-usage", // Render ke 512MB RAM ke liye bohot zaroori hai
-                "--disable-gpu"
-            ]
-        });
-
         const page = await browser.newPage();
-        
-        // HTML content set karein
-        await page.setContent(htmlContent, { 
-            waitUntil: "networkidle0",
-            timeout: 60000 
-        });
+    await page.setContent(htmlContent, { waitUntil: "networkidle0" })
 
-        // PDF generate karein
-        const pdfBuffer = await page.pdf({
-            format: "A4",
-            margin: {
-                top: "10mm",
-                bottom: "10mm",
-                left: "10mm",
-                right: "10mm"
-            },
-            printBackground: true
-        });
-
-        return pdfBuffer;
-
-    } catch (error) {
-        console.error("❌ Puppeteer PDF Generation Error:", error);
-        throw error;
-    } finally {
-        if (browser) {
-            await browser.close();
+    const pdfBuffer = await page.pdf({
+        format: "A4", margin: {
+            top: "5mm",
+            bottom: "5mm",
+            left: "5mm",
+            right: "5mm"
         }
+    })
+
+    return pdfBuffer
+    } catch (error) {
+        console.log(error)
     }
+    finally{
+        await browser.close()
+    }
+
 }
+
 
 async function generateResumePdf({ resume, selfDescription, jobDescription }) {
 
