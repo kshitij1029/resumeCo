@@ -199,38 +199,45 @@ const Generate = () => {
 
                                 {/* Remove/Cross Button (Top Right Corner) */}
                                 {uploadState === 'uploaded' && (
-                                    <>
-                                        <p className='dropzone__title' style={{ color: '#cfe4d7', fontWeight: '600' }}>Resume Uploaded Successfully!</p>
-                                        
-                                        {/* Interactive File View Link */}
-                                        <button
-                                            type="button"
-                                            onClick={(e) => {
-                                                e.stopPropagation(); 
-                                                
-                                                // CHANGED: Use 'selectedFile' (or your exact state variable name) instead of 'file'
-                                                if (selectedFile) { 
-                                                    const fileURL = URL.createObjectURL(selectedFile);
-                                                    window.open(fileURL, '_blank');
-                                                } else {
-                                                    alert("File object missing or upload context unavailable.");
-                                                }
-                                            }}
-                                            className='dropzone__subtitle' 
-                                            style={{ 
-                                                color: '#22c55e', 
-                                                fontWeight: '600', 
-                                                textDecoration: 'underline',
-                                                background: 'none',
-                                                border: 'none',
-                                                cursor: 'pointer',
-                                                padding: 0,
-                                                marginTop: '4px'
-                                            }}
-                                        >
-                                            {fileName}
-                                        </button>
-                                    </>
+                                    <button
+                                        type="button"
+                                        onClick={(e) => {
+                                            e.stopPropagation(); // Prevents triggering any parent click events
+                                            
+                                            // Reset states (adjust these names to match your state definitions)
+                                            if (setUploadState) setUploadState('idle'); 
+                                            if (setFileName) setFileName('');
+                                            if (setFile) setFile(null); // If you store the file object somewhere
+                                            
+                                            // Clear the input value so the same file can be re-uploaded right after
+                                            if (resumeInputRef.current) resumeInputRef.current.value = '';
+                                        }}
+                                        style={{
+                                            position: 'absolute',
+                                            top: '12px',
+                                            right: '12px',
+                                            background: 'transparent',
+                                            border: 'none',
+                                            color: '#c52222',
+                                            cursor: 'pointer',
+                                            zIndex: 10,
+                                            padding: '4px',
+                                            display: 'flex',
+                                            alignItems: 'center',
+                                            justifyContent: 'center',
+                                            borderRadius: '50%',
+                                            transition: 'background-color 0.2s',
+                                        }}
+                                        onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#22c55e1a'}
+                                        onMouseLeave={(e) => e.currentTarget.style.backgroundColor = 'transparent'}
+                                        title="Remove resume"
+                                    >
+                                        {/* Simple Cross Icon */}
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                                            <line x1="18" y1="6" x2="6" y2="18"></line>
+                                            <line x1="6" y1="6" x2="18" y2="18"></line>
+                                        </svg>
+                                    </button>
                                 )}
 
                                 {/* Main Content Area */}
@@ -266,25 +273,25 @@ const Generate = () => {
                                     {uploadState === 'uploaded' && (
                                         <>
                                             <p className='dropzone__title' style={{ color: '#cfe4d7', fontWeight: '600' }}>Resume Uploaded Successfully!</p>
-                                            
+
                                             {/* Interactive File View Link */}
                                             <button
                                                 type="button"
                                                 onClick={(e) => {
-                                                    e.stopPropagation(); // Stop from clicking the dropzone container
-                                                    
-                                                    // Check if you have the active File object in your component state (e.g., 'file')
-                                                    if (file) { 
-                                                        const fileURL = URL.createObjectURL(file);
+                                                    e.stopPropagation();
+
+                                                    // CHANGED: Use 'selectedFile' (or your exact state variable name) instead of 'file'
+                                                    if (selectedFile) {
+                                                        const fileURL = URL.createObjectURL(selectedFile);
                                                         window.open(fileURL, '_blank');
                                                     } else {
                                                         alert("File object missing or upload context unavailable.");
                                                     }
                                                 }}
-                                                className='dropzone__subtitle' 
-                                                style={{ 
-                                                    color: '#22c55e', 
-                                                    fontWeight: '600', 
+                                                className='dropzone__subtitle'
+                                                style={{
+                                                    color: '#22c55e',
+                                                    fontWeight: '600',
                                                     textDecoration: 'underline',
                                                     background: 'none',
                                                     border: 'none',
