@@ -1350,3 +1350,55 @@ $primary-pink: #ff2a75;
     display: none !important;
   }
 }
+
+
+
+@media (max-width: 768px) {
+  /* Reduce gap inside the grid layout wrapper */
+  .features-grid {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 20px !important; /* Drastically minimizes the dead space between image and text cards */
+    align-items: center !important;
+  }
+
+  /* Upscale and adjust the image portal block container */
+  .neon-portal-container {
+    width: 100% !important;
+    max-width: 92% !important; /* Spans wider across the mobile viewport */
+    margin: 0 auto !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+  }
+
+  /* Boost the size of the graphic image itself */
+  .floating-neon-graphic {
+    width: 100% !important;
+    display: flex !important;
+    justify-content: center !important;
+    margin-top: -10px !important; /* Pulls the image tightly closer to its status badge */
+    
+    img {
+      width: 100% !important;
+      height: auto !important;
+      max-height: 280px !important; /* Prevents oversized vertical stretching on long mobiles */
+      object-fit: cover !important;
+      border-radius: 24px !important; /* Keeps the smooth rounded corners matching your layout */
+    }
+  }
+
+  /* Bring the active badge a bit closer down */
+  .portal-status-badge {
+    margin-bottom: 5px !important; 
+    font-size: 0.8rem !important;
+  }
+
+  /* Ensure the text features list aligns cleanly right below the image frame */
+  .features-list {
+    width: 100% !important;
+    padding: 0 16px !important;
+    box-sizing: border-box !important;
+    margin-top: 0 !important; /* Removes any leftover legacy spacing pushes */
+  }
+}
