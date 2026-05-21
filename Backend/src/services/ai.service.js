@@ -1,8 +1,8 @@
 const { GoogleGenAI } = require("@google/genai")
 const { z } = require("zod")
 // const { zodToJsonSchema } = require("zod-to-json-schema")
-const puppeteer = require('puppeteer-core');
-const chromium = require('@sparticuz/chromium');
+import puppeteer from 'puppeteer-core';
+import chromium from '@sparticuz/chromium';
 const path = require('path');
 
 const ai = new GoogleGenAI({
