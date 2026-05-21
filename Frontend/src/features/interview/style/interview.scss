@@ -1100,3 +1100,59 @@ $severity-low: #3fb950;
     display: none; 
   }
 }
+
+
+/* ── MOBILE RESPONSIVE FIXES ── */
+@media (max-width: 768px) {
+  
+  /* Force the main wraps to never exceed the screen width */
+  .align1, 
+  .interview-page {
+    width: 100% !important;
+    max-width: 100vw !important;
+    padding: 10px !important; /* Adjust if your current padding is pushing it out */
+    box-sizing: border-box !important;
+    overflow-x: hidden !important;
+  }
+
+  /* Fix the card container that is getting cut off */
+  .interview-layout {
+    display: flex !important;
+    flex-direction: column !important; /* Stacks nav, content, and sidebar vertically */
+    width: 100% !important;
+    max-width: 100% !important;
+    box-sizing: border-box !important;
+    padding: 12px !important; /* Adds a clean inner breathing space on mobile */
+    margin: 0 auto !important;
+  }
+
+  /* Ensure the navigation links, sidebar, and main content take up full width instead of fixed pixel widths */
+  .interview-nav, 
+  .interview-content, 
+  .interview-sidebar {
+    width: 100% !important;
+    max-width: 100% !important;
+    box-sizing: border-box !important;
+  }
+
+  /* Prevent the horizontal lines from breaking out */
+  .interview-divider, 
+  .sidebar-divider {
+    width: 100% !important;
+    margin: 15px 0 !important;
+  }
+
+  /* Fix the Skill tags so they wrap down cleanly instead of freezing layout width */
+  .skill-gaps__list {
+    display: flex !important;
+    flex-wrap: wrap !important;
+    gap: 8px !important;
+  }
+
+  .skill-tag {
+    max-width: 100% !important;
+    white-space: normal !important; /* Allows long skill texts to break into two lines if needed */
+    word-break: break-word !important;
+    text-align: center;
+  }
+}

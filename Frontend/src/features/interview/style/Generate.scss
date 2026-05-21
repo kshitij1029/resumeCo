@@ -957,3 +957,71 @@ $primary-pink: #ff2a75;
     display: none; // Hides text element "History", leaving icon only for tight pixel widths
   }
 }
+
+
+@media (max-width: 768px) {
+  /* 1. FIX THE SMALL DIV WIDTH */
+  /* Target the main inner form card container (the one holding Target Job Description) */
+  .interview-page > div,
+  div[class*="card"], 
+  div[class*="container"] { 
+    width: 100% !important;
+    max-width: calc(100vw - 24px) !important; /* Forces full width while leaving a clean 12px gutter on edges */
+    box-sizing: border-box !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+  }
+
+  /* Target your textarea element inside the card */
+  textarea, 
+  .interview-page textarea {
+    width: 100% !important;
+    box-sizing: border-box !important;
+  }
+
+  /* 2. FIX THE HISTORY TEXT & ICON POSITIONING */
+  /* Target the header/nav wrapper containing the logo and history button */
+  header, 
+  .navbar,
+  div:has(> .resumeCO-logo) {
+    display: flex !important;
+    justify-content: space-between !important;
+    align-items: center !important;
+    width: 100% !important;
+    padding: 10px 16px !important;
+    box-sizing: border-box !important;
+  }
+
+  /* Force the history button wrapper to display its internal layout elements properly */
+  button:has(svg), 
+  .history-btn-class-name { /* Replace with your actual history button class if known */
+    display: inline-flex !important;
+    align-items: center !important;
+    gap: 6px !important;
+    min-width: max-content !important; /* Prevents text from collapsing down to 0px width */
+    overflow: visible !important;
+  }
+
+  button:has(svg) span,
+  .history-btn-class-name span {
+    display: inline !important; /* Prevents the text element from defaulting to hidden or 0 width */
+    visibility: visible !important;
+  }
+
+  /* 3. FIX THE PING ANIMATION COLLAPSE */
+  /* Make sure the pulsing background circles don't lose their relative alignment anchor */
+  .interview-page,
+  .align1 {
+    position: relative !important;
+    overflow-x: hidden !important; /* Blocks horizontal scrolling without killing the ping visibility */
+  }
+
+  /* Ensure the ping/glow circles retain their size and don't shrink to 0px */
+  div[class*="ping"],
+  div[class*="glow"],
+  div[class*="pulse"] {
+    min-width: 12px !important; /* Adjust based on your preferred design dot size */
+    min-height: 12px !important;
+    display: block !important;
+  }
+}
