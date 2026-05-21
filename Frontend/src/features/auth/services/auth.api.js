@@ -10,25 +10,56 @@ const api = axios.create({                 //Axios instance is created to set th
 
 
 
-export async function register({username,email,password}){
+// export async function register({username,email,password}){
+//     try {
+//         const response = await api.post('/api/auth/register',{
+//             username,email,password
+//         },{
+//             // by default axios dont give access to cookies
+//             withCredentials:true  //now server has access to read cookies data and set it
+//            // Needed for session-based auth / cookie-based JWT
+//         })
+//         if(response.status===200){
+//             toast.success("Successfully Registered")
+//         }
+//         return response.data
+//     } catch (error) {
+//         if (error.response && error.response.status === 400) {
+//             return toast.error('User Already exists with these credentials');
+//         }
+//         console.log(error);
+        
+//     }
+// }
+export async function register({username, email, password}){
     try {
-        const response = await api.post('/api/auth/register',{
-            username,email,password
-        },{
-            // by default axios dont give access to cookies
-            withCredentials:true  //now server has access to read cookies data and set it
-           // Needed for session-based auth / cookie-based JWT
+        const response = await api.post('/api/auth/register', {
+            username, email, password
         })
-        if(response.status===200){
+        
+        // FIX: Backends often return 201 for successful creation. 
+        // Checking for >= 200 and < 300 covers all success scenarios.
+        if (response.status >= 200 && response.status < 300) {
             toast.success("Successfully Registered")
         }
         return response.data
     } catch (error) {
-        if (error.response && error.response.status === 400) {
-            return toast.error('User Already exists with these credentials');
-        }
-        console.log(error);
+        // Fallback error message if backend doesn't provide a specific one
+        let errorMsg = "Something went wrong. Please try again.";
         
+        if (error.response) {
+            if (error.response.status === 400) {
+                errorMsg = 'User already exists with these credentials';
+            } else if (error.response.data && error.response.data.message) {
+                errorMsg = error.response.data.message;
+            }
+        }
+        
+        toast.error(errorMsg);
+        console.error(error);
+        
+        // Throwing the error lets your UI components know the registration failed
+        throw error; 
     }
 }
 
