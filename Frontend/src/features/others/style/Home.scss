@@ -1386,7 +1386,7 @@ $primary-pink: #ff2a75;
   img {
     width: 100% !important; /* Forces the image to take up the full 480px frame width */
     height: auto !important; /* Maintains the crisp, un-stretched aspect ratio */
-    max-height: 400px; /* Caps height so it matches the visual line-height of the 3 cards across */
+    max-height: 380px; /* Caps height so it matches the visual line-height of the 3 cards across */
     object-fit: cover !important; /* Crops cleanly if the image container flexes slightly */
     border-radius: 20px; /* Keeps your clean rounded aesthetic look intact */
     box-shadow: 0px 20px 40px rgba(0, 0, 0, 0.4); /* Optional: Adds subtle depth to match the dark theme */
