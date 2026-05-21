@@ -2,6 +2,7 @@ const { GoogleGenAI } = require("@google/genai")
 const { z } = require("zod")
 // const { zodToJsonSchema } = require("zod-to-json-schema")
 const puppeteer = require('puppeteer');
+const path = require('path');
 
 const ai = new GoogleGenAI({
   apiKey: process.env.GOOGLE_GENAI_API_KEY,
@@ -55,39 +56,94 @@ async function generateInterviewReport({resume, selfDescription, jobDescription}
     return JSON.parse(response.text);
 }
 
+// async function generatePdfFromHtml(htmlContent) {
+//     const browser = await puppeteer.launch({
+//         headless: true, // Must be true in a server environment
+//         args: [
+//             "--no-sandbox", 
+//             "--disable-setuid-sandbox", 
+//             "--disable-dev-shm-usage", // Prevents memory crashes on Render's 512MB RAM
+//             "--single-process"         // Keeps resource usage low
+//         ],
+//         // If you still get "Chrome not found", explicitly set this path:
+//         // executablePath: '/usr/bin/google-chrome-stable' 
+//     });
+//     try {
+//         const page = await browser.newPage();
+//     await page.setContent(htmlContent, { waitUntil: "networkidle0" })
+
+//     const pdfBuffer = await page.pdf({
+//         format: "A4", margin: {
+//             top: "5mm",
+//             bottom: "5mm",
+//             left: "5mm",
+//             right: "5mm"
+//         }
+//     })
+
+//     return pdfBuffer
+//     } catch (error) {
+//         console.log(error)
+//     }
+//     finally{
+//         await browser.close()
+//     }
+
+// }
+
 async function generatePdfFromHtml(htmlContent) {
-    const browser = await puppeteer.launch({
-        headless: true, // Must be true in a server environment
-        args: [
-            "--no-sandbox", 
-            "--disable-setuid-sandbox", 
-            "--disable-dev-shm-usage", // Prevents memory crashes on Render's 512MB RAM
-            "--single-process"         // Keeps resource usage low
-        ],
-        // If you still get "Chrome not found", explicitly set this path:
-        // executablePath: '/usr/bin/google-chrome-stable' 
-    });
+    let browser;
+    
     try {
+        // Render par build script Chrome ko isi location par download karti hai
+        const renderChromePath = path.join('/opt/render/.cache/puppeteer', 'chrome/linux-125.0.6422.78/chrome-linux64/chrome');
+        
+        // Agar Render par hain toh custom path use karein, nahi toh local development mein default
+        const executablePath = process.env.RENDER ? renderChromePath : undefined;
+
+        console.log("Launching Puppeteer on Render environment:", !!process.env.RENDER);
+
+        browser = await puppeteer.launch({
+            headless: true,
+            executablePath: executablePath,
+            args: [
+                "--no-sandbox",
+                "--disable-setuid-sandbox",
+                "--disable-dev-shm-usage", // Render ke 512MB RAM ke liye bohot zaroori hai
+                "--disable-gpu"
+            ]
+        });
+
         const page = await browser.newPage();
-    await page.setContent(htmlContent, { waitUntil: "networkidle0" })
+        
+        // HTML content set karein
+        await page.setContent(htmlContent, { 
+            waitUntil: "networkidle0",
+            timeout: 60000 
+        });
 
-    const pdfBuffer = await page.pdf({
-        format: "A4", margin: {
-            top: "5mm",
-            bottom: "5mm",
-            left: "5mm",
-            right: "5mm"
-        }
-    })
+        // PDF generate karein
+        const pdfBuffer = await page.pdf({
+            format: "A4",
+            margin: {
+                top: "10mm",
+                bottom: "10mm",
+                left: "10mm",
+                right: "10mm"
+            },
+            printBackground: true
+        });
 
-    return pdfBuffer
+        return pdfBuffer;
+
     } catch (error) {
-        console.log(error)
+        console.error("❌ Puppeteer PDF Generation Error:", error);
+        throw error;
+    } finally {
+        if (browser) {
+            await browser.close();
+        }
     }
-    finally{
-        await browser.close()
-    }
-
 }
 
 async function generateResumePdf({ resume, selfDescription, jobDescription }) {
