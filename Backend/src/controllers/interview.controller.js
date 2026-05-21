@@ -84,19 +84,20 @@ async function generateResumePdfController(req, res) {
 
         if (!interviewReport) {
             return res.status(404).json({
-                message: "Interview report not found."
+                message: "Interview report database reference not found."
             });
         }
 
         const { resume, jobDescription, selfDescription } = interviewReport;
 
-        // Call our lightweight html-pdf-node execution service
+        // Triggers the safe, native PDF generation workflow
         const pdfBuffer = await generateResumePdf({ resume, jobDescription, selfDescription });
 
-        if (!pdfBuffer) {
-            return res.status(500).json({ message: "Failed to compile document binary buffer." });
+        if (!pdfBuffer || pdfBuffer.length === 0) {
+            return res.status(500).json({ message: "Empty binary payload compiled from writer tool." });
         }
 
+        // Set response headers to force download attachments
         res.set({
             "Content-Type": "application/pdf",
             "Content-Disposition": `attachment; filename=resume_${interviewReportId}.pdf`,
@@ -106,9 +107,9 @@ async function generateResumePdfController(req, res) {
         return res.send(pdfBuffer);
 
     } catch (error) {
-        console.error("Controller Error generating resume PDF:", error);
+        console.error("Controller level error processing binary compilation:", error);
         return res.status(500).json({
-            message: "Internal server error during PDF parsing/generation.",
+            message: "Failed to build target PDF document.",
             error: error.message
         });
     }

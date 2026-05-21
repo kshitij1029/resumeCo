@@ -1,6 +1,6 @@
 const { GoogleGenAI } = require("@google/genai");
 const { z } = require("zod");
-const htmlPdf = require('html-pdf-node'); // Lighter alternative to Puppeteer
+const PDFDocument = require('pdfkit');
 
 const ai = new GoogleGenAI({
     apiKey: process.env.GOOGLE_GENAI_API_KEY,
@@ -128,68 +128,103 @@ async function generateInterviewReport({resume, selfDescription, jobDescription}
 
 // }
 
+async function generatePdfFromData(resumeData) {
+    return new Promise((resolve, reject) => {
+        const doc = new PDFDocument({ size: 'A4', margin: 30 }); // ~10mm margins
+        let buffers = [];
+        
+        doc.on('data', buffers.push.bind(buffers));
+        doc.on('end', () => {
+            let pdfBuffer = Buffer.concat(buffers);
+            resolve(pdfBuffer);
+        });
+        doc.on('error', reject);
 
-async function generatePdfFromHtml(htmlContent) {
-    // Basic print options matching your original 5mm margins and A4 setting
-    const options = { 
-        format: 'A4',
-        margin: {
-            top: '5mm',
-            bottom: '5mm',
-            left: '5mm',
-            right: '5mm'
+        // Header Section
+        doc.fontSize(20).font('Helvetica-Bold').text(resumeData.name || 'Candidate Name', { align: 'center' });
+        doc.fontSize(10).font('Helvetica').text(`${resumeData.email || ''} | ${resumeData.phone || ''} | ${resumeData.links || ''}`, { align: 'center' });
+        doc.moveDown(1.5);
+
+        // Professional Summary
+        if (resumeData.summary) {
+            doc.fontSize(12).font('Helvetica-Bold').text('PROFESSIONAL SUMMARY');
+            doc.moveTo(30, doc.y).lineTo(565, doc.y).stroke(); // Underline separator
+            doc.moveDown(0.5);
+            doc.fontSize(10).font('Helvetica').text(resumeData.summary, { align: 'justify' });
+            doc.moveDown(1.5);
         }
-    };
-    
-    const file = { content: htmlContent };
 
-    try {
-        // Generates the PDF buffer using an optimized internal stream worker
-        const pdfBuffer = await htmlPdf.generatePdf(file, options);
-        return pdfBuffer;
-    } catch (error) {
-        console.error("Error generating PDF with html-pdf-node:", error);
-        throw error;
-    }
+        // Work Experience Loop
+        if (resumeData.experience && resumeData.experience.length > 0) {
+            doc.fontSize(12).font('Helvetica-Bold').text('WORK EXPERIENCE');
+            doc.moveTo(30, doc.y).lineTo(565, doc.y).stroke();
+            doc.moveDown(0.5);
+
+            resumeData.experience.forEach(exp => {
+                doc.fontSize(11).font('Helvetica-Bold').text(`${exp.role} - ${exp.company}`);
+                doc.fontSize(9).font('Helvetica-Oblique').text(exp.duration);
+                doc.moveDown(0.2);
+                doc.fontSize(10).font('Helvetica').text(exp.description, { align: 'left' });
+                doc.moveDown(1);
+            });
+        }
+
+        // Skills Section
+        if (resumeData.skills) {
+            doc.fontSize(12).font('Helvetica-Bold').text('TECHNICAL SKILLS');
+            doc.moveTo(30, doc.y).lineTo(565, doc.y).stroke();
+            doc.moveDown(0.5);
+            doc.fontSize(10).font('Helvetica').text(resumeData.skills);
+            doc.moveDown(1.5);
+        }
+
+        // Finalize the stream writing
+        doc.end();
+    });
 }
 
 async function generateResumePdf({ resume, selfDescription, jobDescription }) {
-    // 1. Define schema using pure Zod structure for the SDK config
-    const resumePdfSchema = z.object({
-        html: z.string().describe("The clean HTML content of the resume using standard inline styles.")
+    // We define a clean structured schema instead of raw HTML
+    const resumeSchema = z.object({
+        name: z.string().describe("Candidate full name"),
+        email: z.string().describe("Contact email"),
+        phone: z.string().describe("Contact phone number"),
+        links: z.string().describe("LinkedIn, portfolio or GitHub URLs"),
+        summary: z.string().describe("A professional profile summary tailored for the job description"),
+        skills: z.string().describe("Comma-separated core keywords and tech stack skills matching the job description"),
+        experience: z.array(z.object({
+            role: z.string(),
+            company: z.string(),
+            duration: z.string(),
+            description: z.string().describe("Bullet points or sentence describing achievements relevant to target role")
+        }))
     });
 
-    const prompt = `Generate a highly professional resume based on these parameters:
-                    Original Resume Data: ${resume}
-                    Candidate Self Description: ${selfDescription}
-                    Target Job Description: ${jobDescription}
+    const prompt = `Generate structured professional resume metrics for this candidate:
+                    Original Info: ${resume}
+                    Self Bio: ${selfDescription}
+                    Target Job Role: ${jobDescription}
 
-                    The response must match the requested JSON schema.
-                    The resume must be tailored precisely for the target job description to pass ATS screening. 
-                    Ensure the generated HTML uses clean standard elements (div, p, h1, h2, ul, li) and basic CSS inline styling. 
-                    Keep the style elegant, modern, minimal, and confined to 1 or 2 pages maximum. No markdown code blocks inside the JSON string wrapper.`;
+                    Tailor the text fields perfectly to clear ATS algorithms while ensuring a clean human tone.`;
 
     try {
         const response = await ai.models.generateContent({
-            model: "gemini-2.5-flash", // Using standard stable flash identifier
+            model: "gemini-2.5-flash",
             contents: prompt,
             config: {
                 responseMimeType: "application/json",
-                responseSchema: resumePdfSchema, // Pass the Zod schema directly
+                responseSchema: resumeSchema,
             }
         });
 
-        const jsonContent = JSON.parse(response.text);
+        const resumeData = JSON.parse(response.text);
         
-        if (!jsonContent.html) {
-            throw new Error("AI failed to return html property in payload");
-        }
-
-        const pdfBuffer = await generatePdfFromHtml(jsonContent.html);
+        // Pass the structural JSON parameters to our browser-less PDF writer
+        const pdfBuffer = await generatePdfFromData(resumeData);
         return pdfBuffer;
 
     } catch (error) {
-        console.error("Error in generateResumePdf service:", error);
+        console.error("Error generating resume details:", error);
         throw error;
     }
 }
