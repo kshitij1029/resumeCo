@@ -1067,3 +1067,36 @@ $severity-low: #3fb950;
     }
   }
 }
+
+.interview-layout {
+  display: flex;
+  flex-direction: row;
+  width: 100%; /* Ensure it takes full width of the phone screen */
+  max-width: 100vw; /* Keeps it strictly constrained to the viewport width */
+  overflow-x: hidden; /* Fallback to prevent annoying horizontal scrollbars */
+  
+  /* Critical for smaller mobiles: */
+  flex-wrap: wrap; 
+}
+
+/* Ensure the layout pieces scale properly */
+.interview-nav, .interview-content, .interview-sidebar {
+  box-sizing: border-box;
+}
+
+/* On smaller mobile screens like the Realme Narzo, stack elements vertically */
+@media (max-width: 768px) {
+  .interview-layout {
+    flex-direction: column;
+  }
+  
+  .interview-nav, 
+  .interview-sidebar {
+    width: 100% !important; /* Forces sections to take full width instead of staying pushed right */
+  }
+  
+  /* Hide the vertical dividers on mobile screens so they don't break layout */
+  .interview-divider {
+    display: none; 
+  }
+}
