@@ -3,7 +3,9 @@ import '../style/Home.scss';
 import AnimatedBackground from '../components/AnimatedBackground';
 import { Link, useNavigate } from 'react-router';
 import { useAuth } from '../../auth/hooks/useAuth';
-import features from '../../../../public/features.jpg'
+import features from '../../../../public/features.jpg';
+import { LogOut } from 'lucide-react'; // Mandated icon for the logout graphic tracking
+import toast from 'react-hot-toast';
 
 const row1Testimonials = [
   { 
@@ -54,13 +56,13 @@ const row2Testimonials = [
 export default function Home() {
   const navigate = useNavigate();
   const [isVisible, setIsVisible] = useState(false);
-  const { user } = useAuth(); 
-
+  
+  // Destructure both user AND handleLogout from your auth hook just like your friend's configuration
+  const { user, handleLogout } = useAuth(); 
   const [isLoggedIn, setIsLoggedIn] = useState(false); 
 
   useEffect(() => {
     setIsVisible(true);
-    
     if (user) {
       setIsLoggedIn(true);
     } else {
@@ -73,6 +75,22 @@ export default function Home() {
       navigate('/generate');
     } else {
       navigate('/login', { state: { from: '/generate' } });
+    }
+  };
+
+  // CLEANED UP: Extracted out of handleScroll so it is globally available within the component context
+  const onLogout = async () => {
+    try {
+      if (handleLogout) {
+        await handleLogout(); // Destroys the session and pushes token out/blacklists it via the auth controller
+        toast.success("Logged out successfully");
+        navigate("/");
+      } else {
+        console.error("handleLogout method missing from useAuth context wrapper");
+      }
+    } catch (error) {
+      console.error("error occurred in logout handling:", error);
+      toast.error("Logout failed");
     }
   };
 
@@ -98,22 +116,10 @@ export default function Home() {
       const elapsed = timestamp - startTimestamp;
       
       const progress = Math.min(elapsed / duration, 1);
-      
       window.scrollTo(0, startPosition + distance * easeOutCubic(progress));
 
       if (elapsed < duration) {
         window.requestAnimationFrame(step);
-      }
-    };
-
-    const onLogout = async () => {
-      try {
-          await handleLogout();
-          toast.success("Logged out successfully");
-          setIsMenuOpen(false);
-          navigate("/");
-      } catch (error) {
-          console.log("error occured in logout");
       }
     };
 
@@ -139,7 +145,6 @@ export default function Home() {
         <div className="nav-actions">
           {!isLoggedIn ? (
             <>
-              {/* Added hide-on-mobile utility class */}
               <button className="btn-secondary hide-on-mobile" onClick={handleGetStarted}>
                 Get started
               </button>
@@ -152,10 +157,10 @@ export default function Home() {
               <div className="profile-icon">
                 {user?.username ? user.username.charAt(0) : 'U'}
               </div>
-              <span className="profile-username" style={{ fontWeight: '500', color: '#8d9cb0' }}>
+              <span className="profile-username" style={{ fontWeight: '500', color: '#8d9cb0', display: 'flex', alignItems: 'center', gap: '8px' }}>
                 {user?.username || "User"}
-                <button onClick={onLogout} className="logout-btn" title="Logout">
-                  <LogOut size={16} />
+                <button onClick={onLogout} className="logout-btn" title="Logout" style={{ background: 'none', border: 'none', cursor: 'pointer', display: 'flex', alignItems: 'center', padding: '4px' }}>
+                  <LogOut size={16} color="#8d9cb0" />
                 </button>
               </span>
             </div>
@@ -181,7 +186,7 @@ export default function Home() {
         </div>
 
         <div className="trust-footer">
-          <p>Trusting by leading brands, including</p>
+          <p>Trusted by leading brands, including</p>
           <div className="brand-logos">
             <span>Instagram</span>
             <span>Framer</span>
