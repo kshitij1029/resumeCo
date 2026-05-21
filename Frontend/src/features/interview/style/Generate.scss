@@ -846,7 +846,7 @@ $primary-pink: #ff2a75;
     border-radius: 12px;
 
     &__body {
-      padding: 20px;
+      padding: 0px;
     }
 
     .panel {
@@ -861,9 +861,11 @@ $primary-pink: #ff2a75;
       }
 
       &__textarea {
-        min-height: 160px; // Gives plenty of input space for scrolling or pasting text
+        min-height: 160px; 
         font-size: 0.9rem;
         padding: 12px;
+        width: 100%;         /* Explicit override forcing textarea block layout matching */
+        box-sizing: border-box;
       }
     }
 
@@ -885,7 +887,7 @@ $primary-pink: #ff2a75;
     &__footer {
       flex-direction: column-reverse; // Stacks button *above* the metadata on mobile view
       gap: 16px;
-      padding: 20px;
+      padding: 20px 12px;
       align-items: center;
       text-align: center;
 
