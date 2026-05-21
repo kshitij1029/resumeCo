@@ -1,18 +1,26 @@
-# Puppeteer ka official pre-configured image jismein Chrome aur saari Linux libraries pehle se hain
+# Puppeteer ka official image
 FROM ghcr.io/puppeteer/puppeteer:22.6.0
+
+# Root user se directory banayein taaki permissions ka issue na ho
+USER root
 
 # Working directory set karein
 WORKDIR /usr/src/app
 
-# Package files copy karein aur dependencies install karein
+# Package files copy karein
 COPY package*.json ./
+
+# Dependecies install karein (npm ci optimized hai production ke liye)
 RUN npm ci
 
-# Pura code copy karein
-COPY . .
+# Pura source code copy karein aur permissions 'puppeteer' user ko dein
+COPY --chown=puppeteer:puppeteer . .
 
-# Render automatically PORT env variable provide karta hai
+# Wapas safe puppeteer user par switch karein
+USER puppeteer
+
+# Port expose karein
 EXPOSE 10000
 
-# Aapki main file ka naam agar index.js, app.js or server.js hai toh yahan badal sakte ho (Default: index.js)
+# Start command
 CMD [ "node", "index.js" ]
