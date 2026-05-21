@@ -106,6 +106,17 @@ export default function Home() {
       }
     };
 
+    const onLogout = async () => {
+      try {
+          await handleLogout();
+          toast.success("Logged out successfully");
+          setIsMenuOpen(false);
+          navigate("/");
+      } catch (error) {
+          console.log("error occured in logout");
+      }
+    };
+
     window.requestAnimationFrame(step);
   };
 
@@ -143,6 +154,9 @@ export default function Home() {
               </div>
               <span className="profile-username" style={{ fontWeight: '500', color: '#8d9cb0' }}>
                 {user?.username || "User"}
+                <button onClick={onLogout} className="logout-btn" title="Logout">
+                  <LogOut size={16} />
+                </button>
               </span>
             </div>
           )}
