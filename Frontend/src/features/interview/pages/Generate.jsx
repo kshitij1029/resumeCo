@@ -202,15 +202,21 @@ const Generate = () => {
                                     <button
                                         type="button"
                                         onClick={(e) => {
-                                            e.stopPropagation(); // Prevents triggering any parent click events
+                                            e.stopPropagation(); // Prevents triggering the file upload window on close click
                                             
-                                            // Reset states (adjust these names to match your state definitions)
-                                            if (setUploadState) setUploadState('idle'); 
-                                            if (setFileName) setFileName('');
-                                            if (setFile) setFile(null); // If you store the file object somewhere
+                                            // 1. Force the HTML input element to forget the file completely
+                                            if (resumeInputRef.current) {
+                                                resumeInputRef.current.value = '';
+                                            }
                                             
-                                            // Clear the input value so the same file can be re-uploaded right after
-                                            if (resumeInputRef.current) resumeInputRef.current.value = '';
+                                            // 2. Reset all related React states to their pristine initial values.
+                                            // NOTE: Double-check that these function names match YOUR component state definitions.
+                                            if (typeof setUploadState === 'function') setUploadState('idle'); 
+                                            if (typeof setFileName === 'function') setFileName('');
+                                            
+                                            // If you are using a state variable like [selectedFile, setSelectedFile], reset it here:
+                                            if (typeof setSelectedFile === 'function') setSelectedFile(null);
+                                            if (typeof setFile === 'function') setFile(null); 
                                         }}
                                         style={{
                                             position: 'absolute',
@@ -218,7 +224,7 @@ const Generate = () => {
                                             right: '12px',
                                             background: 'transparent',
                                             border: 'none',
-                                            color: '#c52222',
+                                            color: '#c52222', // Red color for delete action
                                             cursor: 'pointer',
                                             zIndex: 10,
                                             padding: '4px',
@@ -228,7 +234,8 @@ const Generate = () => {
                                             borderRadius: '50%',
                                             transition: 'background-color 0.2s',
                                         }}
-                                        onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#22c55e1a'}
+                                        // Cleaned up hover background to tint soft red instead of green to match the cross color
+                                        onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#c522221a'}
                                         onMouseLeave={(e) => e.currentTarget.style.backgroundColor = 'transparent'}
                                         title="Remove resume"
                                     >
