@@ -958,4 +958,194 @@ $primary-pink: #ff2a75;
   }
 }
 
+// Media Query for Mobile Handsets
+@media (max-width: 768px) {
+  /* --- 1. FULL WIDTH CARD & TEXTAREA CORRECTIONS --- */
+  .interview-card {
+    /* Changed margins to 8px to allow the container to span wider like the second image */
+    margin: 15px 8px !important; 
+    width: auto !important;
+    max-width: 100% !important;
+    border-radius: 12px;
 
+    &__body {
+      padding: 0px;
+    }
+
+    .panel {
+      width: 100% !important;
+
+      &__header {
+        margin-bottom: 12px;
+
+        h2 {
+          font-size: 1.1rem;
+        }
+      }
+
+      &__textarea {
+        min-height: 160px; 
+        font-size: 0.9rem;
+        padding: 12px;
+        width: 100% !important; /* Forces the textarea box to expand fully inside the card container */
+        box-sizing: border-box !important;
+      }
+    }
+
+    // Adjusting input field sizing properties safely
+    .dropzone {
+      padding: 24px 16px;
+      width: 100% !important;
+      box-sizing: border-box !important;
+      
+      &__title {
+        font-size: 0.95rem;
+        text-align: center;
+      }
+      
+      &__subtitle {
+        font-size: 0.8rem;
+        text-align: center;
+      }
+    }
+
+    &__footer {
+      flex-direction: column-reverse; 
+      gap: 16px;
+      padding: 20px 12px;
+      align-items: center;
+      text-align: center;
+
+      .footer-info {
+        font-size: 0.8rem;
+      }
+
+      .generate-btn {
+        width: 100%; 
+        justify-content: center;
+        padding: 14px 20px;
+        font-size: 1rem;
+      }
+    }
+  }
+
+  /* --- 2. NAVIGATION & HISTORY TEXT RESTORATION --- */
+  .top-nav-bar {
+    padding: 12px 16px;
+    display: flex !important;
+    justify-content: space-between !important;
+    align-items: center !important;
+    
+    .home2-nav-btn {
+      background: none;
+      border: none;
+      padding: 0;
+      text-align: left;
+      display: flex;
+      align-items: center;
+      max-width: 50%; 
+
+      .logo {
+        font-size: 1.3rem; 
+        font-weight: 700;
+        white-space: nowrap; 
+        display: flex;
+        align-items: center;
+
+        .dot {
+          display: inline-block; 
+        }
+      }
+    }
+
+    .home1-nav-btn {
+      padding: 6px 12px;
+      font-size: 0.9rem;
+      display: flex !important;
+      align-items: center !important;
+      gap: 6px !important;
+      position: relative !important; /* Anchors the absolute ping badge placement */
+      
+      span {
+        display: inline-block !important; /* Forces the text to stay visible regardless of screen size */
+        visibility: visible !important;
+      }
+    }
+  }
+
+  /* --- 3. EXACT TOP-RIGHT CORNER BORDER PING ANIMATION --- */
+  /* This injects the missing live ping circle indicator precisely on the top right edge intersection */
+  .home1-nav-btn::after {
+    content: '';
+    position: absolute;
+    top: -4px;      /* Positions it exactly overlapping the top border line */
+    right: -4px;    /* Positions it exactly overlapping the right border line */
+    width: 8px;
+    height: 8px;
+    background-color: #ff0055; /* Matches your bright pink accent color theme */
+    border-radius: 50%;
+    box-shadow: 0 0 0 0 rgba(255, 0, 85, 0.7);
+    animation: corner-pulsing-ping 1.5s infinite cubic-bezier(0.66, 0, 0, 1);
+    z-index: 10;
+  }
+
+  // Sliding Drawer Mobile Optimization
+  .recent-reports-drawer {
+    width: 100% !important; 
+    max-width: 100%;
+    right: -100%; 
+    
+    &.open {
+      right: 0;
+    }
+
+    .drawer-header {
+      padding: 16px;
+      
+      h2 {
+        font-size: 1.2rem;
+      }
+    }
+
+    .reports-list {
+      padding: 16px;
+      
+      .report-item {
+        padding: 14px;
+        
+        h3 {
+          font-size: 1rem;
+        }
+      }
+    }
+  }
+
+  .page-footer {
+    flex-wrap: wrap; 
+    justify-content: center;
+    gap: 12px 20px;
+    padding: 24px 16px;
+    
+    a {
+      font-size: 0.85rem;
+    }
+  }
+}
+
+/* --- 4. KEYFRAMES FOR THE CORNER BADGE PING --- */
+@keyframes corner-pulsing-ping {
+  0% {
+    transform: scale(0.95);
+    box-shadow: 0 0 0 0 rgba(255, 0, 85, 0.7);
+  }
+  70% {
+    transform: scale(1);
+    box-shadow: 0 0 0 6px rgba(255, 0, 85, 0);
+  }
+  100% {
+    transform: scale(0.95);
+    box-shadow: 0 0 0 0 rgba(255, 0, 85, 0);
+  }
+}
+
+/* REMOVED: The old media query block for max-width: 360px that was explicitly hiding your text has been cleanly deleted */
