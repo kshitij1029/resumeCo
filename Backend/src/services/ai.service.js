@@ -95,17 +95,11 @@ async function generatePdfFromHtml(htmlContent) {
     let browser;
     
     try {
-        // Render par build script Chrome ko isi location par download karti hai
-        const renderChromePath = path.join('/opt/render/.cache/puppeteer', 'chrome/linux-125.0.6422.78/chrome-linux64/chrome');
-        
-        // Agar Render par hain toh custom path use karein, nahi toh local development mein default
-        const executablePath = process.env.RENDER ? renderChromePath : undefined;
-
-        console.log("Launching Puppeteer on Render environment:", !!process.env.RENDER);
+        console.log("Launching Puppeteer on Render...");
 
         browser = await puppeteer.launch({
             headless: true,
-            executablePath: executablePath,
+            // Ekdum clean settings: Jab cache dir configured ho, toh Puppeteer khud binary dhoond leta hai
             args: [
                 "--no-sandbox",
                 "--disable-setuid-sandbox",
