@@ -6,6 +6,14 @@ const cors = require("cors")
 const express = require('express')
 const cookieParser = require('cookie-parser')
 
+const corsOptions = {
+  // CRITICAL: Ensure https:// is prefixed to your Vercel domain
+  origin: 'https://resume-co-lake.vercel.app', 
+  credentials: true, // Include this if you are using cookies/sessions
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization']
+};
+
 const app = express()
 
 // app.use(...) → tells Express to use that middleware for every request
