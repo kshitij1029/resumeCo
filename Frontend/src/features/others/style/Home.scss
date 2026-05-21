@@ -1353,52 +1353,47 @@ $primary-pink: #ff2a75;
 
 
 
-@media (max-width: 768px) {
-  /* Reduce gap inside the grid layout wrapper */
-  .features-grid {
-    display: flex !important;
-    flex-direction: column !important;
-    gap: 20px !important; /* Drastically minimizes the dead space between image and text cards */
-    align-items: center !important;
-  }
+/* --- DESKTOP VIEW ALIGNMENT & IMAGE SCALE FIX --- */
 
-  /* Upscale and adjust the image portal block container */
-  .neon-portal-container {
-    width: 100% !important;
-    max-width: 92% !important; /* Spans wider across the mobile viewport */
-    margin: 0 auto !important;
-    display: flex !important;
-    flex-direction: column !important;
-    align-items: center !important;
-  }
+/* Ensure the features grid distributes space evenly (50/50 split) */
+.features-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr; /* Ensures both columns are perfectly equal in width */
+  gap: 40px; /* Adjust spacing between the image column and the cards column */
+  align-items: center; /* Vertically centers the image portal with the stack of cards */
+  width: 100%;
+  max-width: 1200px; /* Adjust based on your main section wrapper width */
+  margin: 0 auto;
+}
 
-  /* Boost the size of the graphic image itself */
-  .floating-neon-graphic {
-    width: 100% !important;
-    display: flex !important;
-    justify-content: center !important;
-    margin-top: -10px !important; /* Pulls the image tightly closer to its status badge */
-    
-    img {
-      width: 100% !important;
-      height: auto !important;
-      max-height: 280px !important; /* Prevents oversized vertical stretching on long mobiles */
-      object-fit: cover !important;
-      border-radius: 24px !important; /* Keeps the smooth rounded corners matching your layout */
-    }
-  }
+/* Force the portal container to fill up its half of the grid layout */
+.neon-portal-container {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
 
-  /* Bring the active badge a bit closer down */
-  .portal-status-badge {
-    margin-bottom: 5px !important; 
-    font-size: 0.8rem !important;
+/* Upscale the graphic wrapper and image size to match the height of the cards */
+.floating-neon-graphic {
+  width: 100%;
+  max-width: 480px; /* Scales up the container frame significantly to balance the right column */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  
+  img {
+    width: 100% !important; /* Forces the image to take up the full 480px frame width */
+    height: auto !important; /* Maintains the crisp, un-stretched aspect ratio */
+    max-height: 400px; /* Caps height so it matches the visual line-height of the 3 cards across */
+    object-fit: cover !important; /* Crops cleanly if the image container flexes slightly */
+    border-radius: 20px; /* Keeps your clean rounded aesthetic look intact */
+    box-shadow: 0px 20px 40px rgba(0, 0, 0, 0.4); /* Optional: Adds subtle depth to match the dark theme */
   }
+}
 
-  /* Ensure the text features list aligns cleanly right below the image frame */
-  .features-list {
-    width: 100% !important;
-    padding: 0 16px !important;
-    box-sizing: border-box !important;
-    margin-top: 0 !important; /* Removes any leftover legacy spacing pushes */
-  }
+/* Keep the badge nicely centered over the newly upscaled image frame */
+.portal-status-badge {
+  margin-bottom: 20px;
 }
