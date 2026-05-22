@@ -20,6 +20,9 @@ const Login = () => {
         if (!email.trim() || !password.trim()) {
             return toast.error("All fields are required");
         }
+        if(!email.endsWith("@gmail.com")) {
+            return toast.error("Enter a valid Email");
+        }
         await handleLogin({ email, password })
         navigate("/")
     }
