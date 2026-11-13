@@ -2,7 +2,7 @@
 
 resumeCo is a full-stack web application that helps candidates prepare for a role by analysing their resume against a job description and generating a structured, AI-assisted interview preparation report.
 
-The application combines a React frontend, an Express API, MongoDB persistence and Google's Gemini API. Users can create an account, submit their resume and role details, review a tailored preparation report, revisit saved reports and generate a resume PDF tailored to the target role.
+The application combines a React frontend, an Express API, MongoDB persistence and Google's Gemini API. Users can create an account, submit their resume and role details, review a tailored preparation report and revisit saved reports.
 
 ## What it does
 
@@ -12,7 +12,6 @@ The application combines a React frontend, an Express API, MongoDB persistence a
 - **Skill-gap insights:** highlights skills to work on and assigns a severity level.
 - **Preparation roadmap:** creates a day-wise plan with focus areas and actionable tasks.
 - **Saved reports:** stores reports against the signed-in user and supports viewing an individual report or report history.
-- **Tailored PDF generation:** generates a clean, ATS-oriented resume PDF using the information saved in a report.
 - **Authentication:** supports registration, login, logout and retrieval of the current user's profile.
 
 ## Tech stack
@@ -26,7 +25,6 @@ The application combines a React frontend, an Express API, MongoDB persistence a
 | Validation / structured output | Zod |
 | Authentication | JSON Web Tokens, HTTP-only cookies, bcryptjs |
 | Resume processing | pdf-parse, Multer |
-| PDF generation | Puppeteer |
 
 ## Application flow
 
@@ -35,7 +33,7 @@ The application combines a React frontend, an Express API, MongoDB persistence a
 3. The API extracts text from the uploaded PDF.
 4. Gemini generates structured interview-preparation content validated against a Zod schema.
 5. The report is saved in MongoDB and associated with the authenticated user.
-6. The user can revisit the report and request a tailored PDF resume.
+6. The user can revisit the saved report.
 
 ## Project structure
 
@@ -51,7 +49,7 @@ resumeCo/
 │       ├── middlewares/     # Authentication and file-upload middleware
 │       ├── models/          # User, interview report and token blacklist models
 │       ├── routes/          # API route definitions
-│       └── services/        # Gemini integration and PDF generation
+│       └── services/        # Gemini integration
 └── Frontend/
     ├── package.json
     └── src/
@@ -137,7 +135,6 @@ Open the local URL printed by Vite (usually `http://localhost:5173`).
 | POST | `/api/interview/` | Generate and save an interview report | Authenticated |
 | GET | `/api/interview/` | List the current user's reports | Authenticated |
 | GET | `/api/interview/report/:interviewId` | Retrieve one owned report | Authenticated |
-| POST | `/api/interview/resume/pdf/:interviewReportId` | Generate a tailored resume PDF for an owned report | Authenticated |
 
 Resume uploads are handled in memory and are currently limited to **3 MB** by the upload middleware.
 
@@ -146,7 +143,7 @@ Resume uploads are handled in memory and are currently limited to **3 MB** by th
 - Passwords are hashed with bcrypt before storage.
 - Authentication tokens are stored in HTTP-only cookies.
 - Protected API routes require a valid authenticated session.
-- Interview reports are scoped to the authenticated user when retrieved or used to generate a PDF.
+- Interview reports are scoped to the authenticated user.
 - Keep API keys and database credentials in local environment files; never commit real secrets.
 
 ## Current project status
